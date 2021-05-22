@@ -1,13 +1,10 @@
 import React, {useState}  from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableHighlight, Image, Button} from 'react-native';
-import { Entypo } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
+import { StyleSheet, Text, View, SafeAreaView, TouchableHighlight, Button} from 'react-native';
+import { Entypo, AntDesign } from '@expo/vector-icons';
 
 
-export default props=>{
-
-    const [ligado, setLigado]=useState(false)
-    
+export default function (){
+   
     return(
         <SafeAreaView >
            <View style={estilos.container}>
@@ -35,7 +32,7 @@ export default props=>{
                             <Entypo name="gauge" size={20} color="black" />
                             <Text>Ritmo (min/km)</Text>
                         </View>
-                    </View>
+                    </View> 
                 </View>
 
                 <View style={{flexDirection:'row', alignItems:'space-between'}}>
@@ -48,13 +45,7 @@ export default props=>{
                     </View>
                 </View>
 
-                <View>
-               <Text>Mapa</Text>
-               
-                </View>
-
-                
-
+                <Text>MAPA</Text>
                 
            </View>
             

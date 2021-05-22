@@ -2,13 +2,12 @@ import * as React from 'react';
 import { Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
+import { Entypo, Feather } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Login from './componentes/login'
-import Atividades from './componentes/atividades'
+import Historico from './componentes/historico'
 import Desafios from './componentes/desafios'
 import Praticando from './componentes/praticando'
 
@@ -20,9 +19,9 @@ function Tlogin({navigation}){
   );
 }
 
-function Tatividades({navigation}){
+function Thistorico({navigation}){
   return(
-    <Atividades/>
+    <Historico/>
   );
 }
 
@@ -44,7 +43,7 @@ export default function App() {
       <Guias.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
-            if (route.name === 'Atividades') {
+            if (route.name === 'Historico') {
               return (
                 <Fontisto name="ampproject" size={24} color="black" />
               );
@@ -77,9 +76,9 @@ export default function App() {
                 />
 
                 <Guias.Screen
-                    name="Atividades"
-                    component={Tatividades}
-                    options={{title:'Atividades',
+                    name="Historico"
+                    component={Thistorico}
+                    options={{title:'Historico',
                     headerStyle:{
                       backgroundColor:"#f57804"
                     },
