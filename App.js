@@ -10,6 +10,8 @@ import Login from './componentes/login'
 import Historico from './componentes/historico'
 import Desafios from './componentes/desafios'
 import Praticando from './componentes/praticando'
+import DetalhesAtv from './componentes/detalhesatv'
+import Detalhesgraf from './componentes/detalhesatvgraf'
 
 const Guias=createBottomTabNavigator();
 
@@ -27,7 +29,7 @@ function Thistorico({navigation}){
 
 function Tdesafios({navigation}){
   return(
-    <Desafios/>
+    <DetalhesAtv/>
   );
 }
 

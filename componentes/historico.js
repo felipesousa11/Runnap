@@ -1,52 +1,53 @@
 import React, {useState, useEffect} from 'react'
-import {View, Text, FlatList, ActivityIndicator, StyleSheet, Image} from 'react-native'
-import { FontAwesome5, FontAwesome, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import {View, Text, FlatList, SafeAreaView, StyleSheet, Image} from 'react-native'
+import { FontAwesome5, FontAwesome, Feather, MaterialCommunityIcons, TouchableHighlight } from '@expo/vector-icons';
 import Constants from 'expo-constants';
 import Historico from './bdatividades';
 
 
-export default function(){
-    
-    const [icone, setIcone]=useState(true)
 
-    
+export default function(){
+       
     const [historico, setHistorico] = React
     .useState(Historico.getHistorico());
-    
+
+    const [detalhes, setDetalhes]=>(){
+        
+    } 
     return(
-        <View>
+        <SafeAreaView>
                 <FlatList
                     data={historico}
                     keyExtractor={({id}, index)=>id}
                     renderItem={({item})=>(
                         <View style={style.container}>
-                            <View style={{flexDirection:'row'}}>
-                          
-
+                            <View style={{flexDirection:'row',paddingLeft:15,paddingRight:15,}}>
                                 <FontAwesome5 name={"running"} size={24} color="black" style={{paddingRight:5}} />
                                 <Text style={style.txtTitulo}>{item.atividade}</Text>
                             </View>
                                 <View style={style.box}>
                                     <View>
-                                        <Text>Data</Text>
+                                        <Text style={{fontSize:12, textAlign:'center'}}>Data</Text>
                                         <Text style={style.txtInfor}>{item.data}</Text>
                                     </View>
 
                                     <View>
-                                        <Text>Distância</Text>
+                                        <Text style={{fontSize:12, textAlign:'center'}}>Distância</Text>
                                         <Text style={style.txtInfor}>{item.distancia} km</Text>
                                     </View>
                                     
                                     <View>
-                                        <Text>Tempo</Text>
+                                        <Text style={{fontSize:12, textAlign:'center'}}>Tempo</Text>
                                         <Text style={style.txtInfor}>{item.tempo}</Text>
                                     </View>
                                 </View>
                                 <View>
+                                    <TouchableHighlight>
                                     <Image
                                         source={require('../img/printmapa.png')}
                                         style={style.imagem}
                                     />
+                                    </TouchableHighlight>
                                 </View>
                                 <View style={style.acoes}>
                                         <MaterialCommunityIcons name="arm-flex-outline" size={24} color="black" />
@@ -59,18 +60,16 @@ export default function(){
                         />
                     
                 
-        </View>
+        </SafeAreaView>
     )
 }
 
 const style = StyleSheet.create({
-
+    body:{
+        backgroundColor:"#fff",
+    },
     container:{
-        marginBottom:20,
-        borderBottomWidth:0.9,
-        borderBottomColor:"#cfcfcf",
-        paddingLeft:15,
-        paddingRight:15,
+        marginBottom:25,
         alignContent: 'center',
     },
 
@@ -78,14 +77,18 @@ const style = StyleSheet.create({
         flexDirection:'row',
         paddingTop:5,
         paddingBottom:5,
+        paddingLeft:15,
+        paddingRight:15,
         justifyContent:'space-between',
     },
 
     acoes:{
-        backgroundColor:"#cfcfcf",
+        backgroundColor:"#EBEAEA",
         flexDirection:'row',
         paddingTop:5,
         paddingBottom:5,
+        paddingLeft:15,
+        paddingRight:15,
         justifyContent:'space-between',
 
     },
@@ -103,7 +106,8 @@ const style = StyleSheet.create({
     imagem:{
         width:"100%",
         resizeMode: 'contain',
-        margin:0,
+        marginTop:-110,
+        marginBottom:-115,
 
     },
 })
