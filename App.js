@@ -29,7 +29,7 @@ function Thistorico({navigation}){
 
 function Tdesafios({navigation}){
   return(
-    <DetalhesAtv/>
+    <Desafios/>
   );
 }
 

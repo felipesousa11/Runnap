@@ -1,10 +1,45 @@
-import React, {useState}  from 'react';
+import React, {useState, useEffect}  from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableHighlight, Button} from 'react-native';
 import { Entypo, AntDesign } from '@expo/vector-icons';
-
+import MapView, { Marker } from 'react-native-maps';
+import * as Location from 'expo-location';
 
 export default function (){
-   
+
+    const [location, setLocation] = useState(null);
+    const [historicoLocalizacao, setHistoricoLocalizacao] = useState([]);
+    
+
+    Location.watchPositionAsync({timeInterval:3000, mayShowUserSettingsDialog:true}, (location) => {
+        // setLocation(location);
+        setHistoricoLocalizacao([
+            ...historicoLocalizacao, 
+            {
+                lat: location.coords.latitude,
+                lng: location.coords.longitude
+            }
+            ]);
+    })
+
+    useEffect(() => {
+            
+        (async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+              setErrorMsg('Permission to access location was denied');
+              return;
+            }
+      
+            //let location = await Location.getCurrentPositionAsync({});
+            /*setHistoricoLocalizacao([...historicoLocalizacao,{
+                lat: location.coords.latitude,
+                lng: location.coords.latitude
+            }]);*/
+            let x = await Location.getProviderStatusAsync();
+            setLocation(x);
+          })();
+    }, [])
+
     return(
         <SafeAreaView >
            <View style={estilos.container}>
@@ -44,8 +79,35 @@ export default function (){
                         <Entypo name="bar-graph" size={24} color="black" />
                     </View>
                 </View>
+                
+                {/* <TouchableHighlight onPress={obterlocal}>
+                <Text>Clique aqui para pegar a localização</Text>
+                </TouchableHighlight> */}
+                <Text>Latitude: {historicoLocalizacao}</Text>
+                <Text>Longitude: {JSON.stringify(location)}</Text>
+                <MapView
+                    style={{
+                        height: 320,
+                        width: '100%',
+                                            
+                    }}
+                    initialRegion={{
+                    latitude: 37.78825,
+                    longitude: -122.4324,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,                                   
 
-                <Text>MAPA</Text>
+                    }}
+                >
+                {
+                    historicoLocalizacao.map((position, index) => {
+                        <Marker
+                            key={index}
+                            coordinate={{ latitude : position.lat , longitude : position.lng}}                            
+                        />
+                    })
+                }
+                </MapView>
                 
            </View>
             

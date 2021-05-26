@@ -11,9 +11,9 @@ export default function(){
     const [historico, setHistorico] = React
     .useState(Historico.getHistorico());
 
-    const [detalhes, setDetalhes]=>(){
+    // const [detalhes, setDetalhes]=>(){
         
-    } 
+    //} 
     return(
         <SafeAreaView>
                 <FlatList
@@ -42,12 +42,12 @@ export default function(){
                                     </View>
                                 </View>
                                 <View>
-                                    <TouchableHighlight>
+                                   
                                     <Image
                                         source={require('../img/printmapa.png')}
                                         style={style.imagem}
                                     />
-                                    </TouchableHighlight>
+                                 
                                 </View>
                                 <View style={style.acoes}>
                                         <MaterialCommunityIcons name="arm-flex-outline" size={24} color="black" />
