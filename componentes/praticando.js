@@ -10,7 +10,7 @@ export default function (){
     const [historicoLocalizacao, setHistoricoLocalizacao] = useState([]);
     
 
-    Location.watchPositionAsync({timeInterval:3000, mayShowUserSettingsDialog:true}, (location) => {
+    Location.watchPositionAsync({timeInterval:3000,distanceInterval:1, mayShowUserSettingsDialog:true}, (location) => {
         // setLocation(location);
         setHistoricoLocalizacao([
             ...historicoLocalizacao, 
@@ -83,7 +83,7 @@ export default function (){
                 {/* <TouchableHighlight onPress={obterlocal}>
                 <Text>Clique aqui para pegar a localização</Text>
                 </TouchableHighlight> */}
-                <Text>Latitude: {historicoLocalizacao}</Text>
+                <Text>Latitude: {historicoLocalizacao.length}</Text>
                 <Text>Longitude: {JSON.stringify(location)}</Text>
                 <MapView
                     style={{

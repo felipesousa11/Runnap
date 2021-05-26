@@ -11,9 +11,7 @@ export default function(){
     const [historico, setHistorico] = React
     .useState(Historico.getHistorico());
 
-    // const [detalhes, setDetalhes]=>(){
-        
-    //} 
+
     return(
         <SafeAreaView>
                 <FlatList
