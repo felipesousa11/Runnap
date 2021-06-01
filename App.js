@@ -51,7 +51,7 @@ function Tperfil({navigation}){
 
 export default function App() {
   return (
-  <SafeAreaView> 
+  // <SafeAreaView> 
     <NavigationContainer>
       <Guias.Navigator
         screenOptions={({ route }) => ({
@@ -112,6 +112,6 @@ export default function App() {
                 />
       </Guias.Navigator>
     </NavigationContainer>
-  </SafeAreaView>   
+  // </SafeAreaView>   
   );
 }

@@ -3,13 +3,25 @@ import { StyleSheet, Text, View, SafeAreaView, TouchableHighlight, Button} from 
 import { Entypo, AntDesign } from '@expo/vector-icons';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 
+import * as TaskManager from 'expo-task-manager';
+import * as Location from 'expo-location';
+const LOCATION_TASK_NAME = 'background-location-task';
+
 export default function (){
 
     const [location, setLocation] = useState(null);
     const [historicoLocalizacao, setHistoricoLocalizacao] = useState([]);
     
+    const [posicaoAtual, setPosicaoAtual] = useState({
+        latitude: 37.78825,
+        longitude: -122.4324,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      });
+  
+      const [rota, setRota] = useState([]);
 
-    Location.watchPositionAsync({timeInterval:3000,distanceInterval:1, mayShowUserSettingsDialog:true}, (location) => {
+    /*Location.watchPositionAsync({timeInterval:3000,distanceInterval:1, mayShowUserSettingsDialog:true}, (location) => {
         // setLocation(location);
         setHistoricoLocalizacao([
             ...historicoLocalizacao, 
@@ -18,16 +30,39 @@ export default function (){
                 longitude: location.coords.longitude
             }
             ]);
-    })
+    })*/
+
+    startTraking = async () => {
+        const { status } = await Location.requestBackgroundPermissionsAsync();
+        if (status === 'granted') {
+          console.log("Inicinando serviço")
+          await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
+            accuracy: Location.Accuracy.High,
+          });     
+        }    
+      };
+    
+      callbackUpdate = (track) => {
+        /*console.log("SIZE: ", track)*/
+        let current = track[track.length-1][0].coords;
+        current = {
+          ...posicaoAtual,
+          ...current,
+          latitudeDelta: 0.0122,
+          longitudeDelta: 0.0121
+        }
+        setPosicaoAtual(current);
+        setRota([...rota,{latitude:current.latitude, longitude:current.longitude}])
+      }
 
     useEffect(() => {
             
         (async () => {
-            let { status } = await Location.requestForegroundPermissionsAsync();
+            let { status } = false || await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
               setErrorMsg('Permission to access location was denied');
               return;
-            }
+            }            
       
             //let location = await Location.getCurrentPositionAsync({});
             /*setHistoricoLocalizacao([...historicoLocalizacao,{
@@ -36,6 +71,7 @@ export default function (){
             }]);*/
             let x = await Location.getProviderStatusAsync();
             setLocation(x);
+            startTraking();
           })();
     }, [])
 
@@ -85,6 +121,8 @@ export default function (){
                 <Text>Latitude: {historicoLocalizacao.length}</Text>
                 <Text>Longitude: {JSON.stringify(location)}</Text>
                 <MapView
+                    region={posicaoAtual}
+                    provider="google"
                     style={{
                         height: 320,
                         width: '100%',
@@ -98,9 +136,19 @@ export default function (){
 
                     }}
                 >
-                {historicoLocalizacao &&
-                    <Polyline coordinates={historicoLocalizacao} strokeWidth={5} />
-                }
+                 <Polyline
+          coordinates={rota}
+          strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
+          strokeColors={[
+            '#7F0000',
+            '#00000000', // no color, creates a "long" gradient between the previous and next coordinate
+            '#B24112',
+            '#E5845C',
+            '#238C23',
+            '#7F0000'
+          ]}
+          strokeWidth={6}
+        />
                 </MapView>
                 
            </View>
@@ -163,3 +211,25 @@ const estilos = StyleSheet.create({
     }
 
 })
+
+
+let callbackUpdate = (track) => {
+    console.log("size:", track.length)
+  };
+  const track = [];
+  
+  const addLocation = (location) =>{
+    track.push(location);
+    callbackUpdate(track);
+  }
+  
+  TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
+    if (error) {
+      console.log("erro!")
+      return;
+    }
+    if (data) {
+      const { locations } = data;    
+      addLocation(locations)
+    }
+  });
