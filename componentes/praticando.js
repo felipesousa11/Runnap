@@ -1,8 +1,7 @@
 import React, {useState, useEffect}  from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableHighlight, Button} from 'react-native';
 import { Entypo, AntDesign } from '@expo/vector-icons';
-import MapView, { Marker } from 'react-native-maps';
-import * as Location from 'expo-location';
+import MapView, { Marker, Polyline } from 'react-native-maps';
 
 export default function (){
 
@@ -15,8 +14,8 @@ export default function (){
         setHistoricoLocalizacao([
             ...historicoLocalizacao, 
             {
-                lat: location.coords.latitude,
-                lng: location.coords.longitude
+                latitude : location.coords.latitude,
+                longitude: location.coords.longitude
             }
             ]);
     })
@@ -92,20 +91,15 @@ export default function (){
                                             
                     }}
                     initialRegion={{
-                    latitude: 37.78825,
-                    longitude: -122.4324,
+                    latitude: 37.235290,
+                    longitude: -121.827420,
                     latitudeDelta: 0.0922,
                     longitudeDelta: 0.0421,                                   
 
                     }}
                 >
-                {
-                    historicoLocalizacao.map((position, index) => {
-                        <Marker
-                            key={index}
-                            coordinate={{ latitude : position.lat , longitude : position.lng}}                            
-                        />
-                    })
+                {historicoLocalizacao &&
+                    <Polyline coordinates={historicoLocalizacao} strokeWidth={5} />
                 }
                 </MapView>
                 
