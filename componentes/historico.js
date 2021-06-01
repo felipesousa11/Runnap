@@ -127,7 +127,8 @@ const ExpandableComponent = ({item, onClickFunction}) => {
 
     const [inscrito, setInscrito]=useState(false)
     return(
-        <View>
+        <SafeAreaView style={{marginTop:35}}>
+            <View>
             <TouchableOpacity
                 style={styles.item}
                 onPress={onClickFunction}
@@ -231,6 +232,7 @@ const ExpandableComponent = ({item, onClickFunction}) => {
                 }
             </View>
         </View>
+        </SafeAreaView>
     )
 }
 
@@ -259,21 +261,15 @@ export default function(){
     }
 
     return(
-        <SafeAreaView style={{flex:1}}>
+        <SafeAreaView>
             <View style={styles.container}>
-                <View style={styles.header}>
-                    <Text style={styles.titleText}>Histórico</Text>
+                <View style={styles.cabecalho}>
                     <TouchableOpacity
                         onPress={()=>setmultiSelect(!multiSelect)}   
                     >
-                    <Text style={styles.headerbutton}>
-                        {
-                            multiSelect
-                            ? 'Enable Single \n Expand'
-                            : 'Enable Multiple \n Expand'
-                        }
-                    </Text>
-                    </TouchableOpacity>
+                        <Entypo name="menu" size={24} color="black" /> 
+                        </TouchableOpacity>
+                  
                 </View>
                 <ScrollView>
                         {
@@ -296,6 +292,16 @@ export default function(){
 const styles = StyleSheet.create({
     container:{
         flex:1,
+    },
+
+    cabecalho:{
+        flex:1,
+        width:'100%',
+        flexDirection:'row',
+        alignContent:'center',
+        backgroundColor:"red",
+        padding:5,
+       
     },
     
     header:{
