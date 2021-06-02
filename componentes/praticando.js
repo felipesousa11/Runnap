@@ -5,13 +5,16 @@ import MapView, { Marker, Polyline } from 'react-native-maps';
 
 import * as TaskManager from 'expo-task-manager';
 import * as Location from 'expo-location';
+import haversine from 'haversine';
 const LOCATION_TASK_NAME = 'background-location-task';
 
 export default function (){
 
     const [location, setLocation] = useState(null);
+    const [distancia, setDistancia] = useState(0);
     const [historicoLocalizacao, setHistoricoLocalizacao] = useState([]);
     
+    // --------------------
     const [posicaoAtual, setPosicaoAtual] = useState({
         latitude: 37.78825,
         longitude: -122.4324,
@@ -21,38 +24,35 @@ export default function (){
   
       const [rota, setRota] = useState([]);
 
-    /*Location.watchPositionAsync({timeInterval:3000,distanceInterval:1, mayShowUserSettingsDialog:true}, (location) => {
-        // setLocation(location);
-        setHistoricoLocalizacao([
-            ...historicoLocalizacao, 
-            {
-                latitude : location.coords.latitude,
-                longitude: location.coords.longitude
-            }
-            ]);
-    })*/
-
     startTraking = async () => {
         const { status } = await Location.requestBackgroundPermissionsAsync();
         if (status === 'granted') {
           console.log("Inicinando serviço")
           await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
             accuracy: Location.Accuracy.High,
-          });     
+          });               
         }    
       };
+
+      
     
       callbackUpdate = (track) => {
         /*console.log("SIZE: ", track)*/
-        let current = track[track.length-1][0].coords;
-        current = {
-          ...posicaoAtual,
-          ...current,
-          latitudeDelta: 0.0122,
-          longitudeDelta: 0.0121
+        if(track){
+            let current = track[track.length-1][0].coords;
+            current = {
+            ...posicaoAtual,
+            ...current,
+            latitudeDelta: 0.0122,
+            longitudeDelta: 0.0121
+            }
+            setPosicaoAtual(current);
+
+            if(current.latitude && rota &&  rota.length>0)
+                setDistancia(distancia+ haversine(current, rota[rota.length-1],{unit: 'km'}))
+            
+            setRota([...rota,{latitude:current.latitude, longitude:current.longitude}])
         }
-        setPosicaoAtual(current);
-        setRota([...rota,{latitude:current.latitude, longitude:current.longitude}])
       }
 
     useEffect(() => {
@@ -64,17 +64,13 @@ export default function (){
               return;
             }            
       
-            //let location = await Location.getCurrentPositionAsync({});
-            /*setHistoricoLocalizacao([...historicoLocalizacao,{
-                lat: location.coords.latitude,
-                lng: location.coords.latitude
-            }]);*/
             let x = await Location.getProviderStatusAsync();
             setLocation(x);
             startTraking();
           })();
     }, [])
 
+    /**------------------------- */
     return(
         <SafeAreaView >
            <View style={estilos.container}>
@@ -83,7 +79,8 @@ export default function (){
                 </View>
 
                 <View style={{alignItems:'center'}}>
-                    <Text style={estilos.txtPrincipal} >9,42</Text>
+                    {/* Distancia */ }
+                    <Text style={estilos.txtPrincipal} >{distancia.toFixed(2)}km</Text>
                     <Text>Distância</Text>
                 </View>
 
@@ -120,6 +117,8 @@ export default function (){
                 </TouchableHighlight> */}
                 <Text>Latitude: {historicoLocalizacao.length}</Text>
                 <Text>Longitude: {JSON.stringify(location)}</Text>
+
+                {/* Mapa */}
                 <MapView
                     region={posicaoAtual}
                     provider="google"
@@ -150,6 +149,7 @@ export default function (){
           strokeWidth={6}
         />
                 </MapView>
+                {/* ---------------------- */}
                 
            </View>
             
@@ -212,15 +212,14 @@ const estilos = StyleSheet.create({
 
 })
 
-
-let callbackUpdate = (track) => {
-    console.log("size:", track.length)
-  };
+// -----------------------------
+let callbackUpdate = null;
   const track = [];
   
   const addLocation = (location) =>{
     track.push(location);
-    callbackUpdate(track);
+    if(callbackUpdate)
+        callbackUpdate(track);
   }
   
   TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
