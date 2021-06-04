@@ -12,7 +12,6 @@ import Desafios from './componentes/desafios'
 import Perfil from './componentes/perfil'
 import Cadastro from './componentes/cadastro'
 import Mapa from './componentes/mapa'
-import Home from './componentes/home'
 
 const Tab=createBottomTabNavigator();
 const Stack =createStackNavigator();
@@ -44,54 +43,64 @@ export default function App() {
   return (
   
     <NavigationContainer>
-      <Stack.Navigator 
-          headerMode='none'
-          initialRouteName="Login" >
-      
-          <Stack.Screen
-              headerNode="none"
-              name="Login"
-              component={Login}
-              options={{title:'Bem vindo'}}
-          />
+      <Tab.Navigator
+          screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            if (route.name === 'Historico') {
+              return (
+                <Fontisto name="ampproject" size={24} color={color} />
+              );
+            } else if (route.name === 'Desafios') {
+              return (
+                <Entypo name="trophy" size={24} color={color} />
+              );
+            }
+            else if (route.name === 'Praticando') {
+              return (
+                <Feather name="activity" size={24} color={color} />
+              );
+            }
 
-          <Stack.Screen
-              name="Cadastro"
-              component={Cadastro}
-              options={{title:'Cadastro' }}
-          />
+            else if (route.name === 'Perfil') {
+              return (
+                <FontAwesome name="user-circle-o" size={24} color={color} />
+              );
+            }
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: 'tomato',
+          inactiveTintColor: 'gray',
+        }}
+      >
+                
 
-          <Stack.Screen
-              name="Home"
-              component={Home}
-              options={{title:'Home' }}
-          />
-
-          <Stack.Screen
+                <Tab.Screen
                   name="Desafios"
-                  component={Desafios}
+                  component={Stacks}
                   options={{title:'Desafios',
                   }}
                 />
 
-                <Stack.Screen
+                <Tab.Screen
                     name="Historico"
                     component={Historico}
                     options={{title:'Historico',}}
                 />
 
-                <Stack.Screen
+                <Tab.Screen
                   name="Praticando"
-                  component={Praticando}
+                  component={Mapa}
                   options={{title:'Praticando'}}
                 />
 
-                <Stack.Screen
+                <Tab.Screen
                   name="Perfil"
                   component={Perfil}
                   options={{title:'Perfil'}}
                 />
-    </Stack.Navigator>
+
+      </Tab.Navigator>
     </NavigationContainer>
   
   );

@@ -1,118 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import { Text, View, StyleSheet,SafeAreaView, ScrollView, TouchableOpacity,Button,Image, LayoutAnimation, Platform, UIManager } from 'react-native';
 import {FontAwesome5, FontAwesome, MaterialCommunityIcons,SimpleLineIcons,AntDesign, Entypo,Ionicons } from '@expo/vector-icons';
+import BDhistorico from './bd_historico';
 
-const CONTENT =[
-    {
-        isExpanded:false,
-        category_name:"Corrida ao entardecer",
-        image:require('../img/printmapa.png'),
-        tempo:"00:35:06",
-        distancia:"5,56",
-        data:"21/05/2021",
-        subcategory:[
-            {id:1, 
-                tempo:"00:35:06",
-                distancia:"5,56",
-                ritmo:"5,36",
-                data:"18/05/2021",
-                velocidadeMax:"8.2",
-                velocidadeMed:"10,5",
-                ganhoElev:"20",
-                perdaElev:"26",
-                hora:"17:29"
-            },
-        ]
-    },
-
-    {
-        isExpanded:false,
-        category_name:'De volta as corridas',
-        image:require('../img/printmapa3.jpeg'),
-        tempo:"00:35:06",
-        distancia:"5,56",
-        data:"21/05/2021",
-        subcategory:[
-            {id:2, 
-                tempo:"00:45:16",
-                distancia:"4,56",
-                ritmo:"5,36",
-                data:"19/05/2021",
-                velocidadeMax:"8.2",
-                velocidadeMed:"10,5",
-                ganhoElev:"20",
-                perdaElev:"26",
-                hora:"16:41"
-            },
-        ]
-    },
-
-    {
-        isExpanded:true,
-        category_name:'Corrida leve',
-        image:require('../img/printmapa2.jpeg'),
-        tempo:"00:35:06",
-        distancia:"5,56",
-        data:"21/05/2021",
-        subcategory:[
-            {id:3, 
-                tempo:"00:52:29",
-                distancia:"7,41",
-                ritmo:"5,36",
-                data:"20/05/2021",
-                velocidadeMax:"8.2",
-                velocidadeMed:"10,5",
-                ganhoElev:"20",
-                perdaElev:"26",
-                hora:"17:15"
-            },
-        ]
-    },
-
-    {
-        isExpanded:false,
-        category_name:'Corrida da tarde',
-        image:require('../img/printmapa3.jpeg'),
-        tempo:"00:35:06",
-        distancia:"5,56",
-        data:"21/05/2021",
-        subcategory:[
-            {id:4,
-                tempo:"00:52:29",
-                distancia:"7,41",
-                ritmo:"5,36",
-                data:"20/05/2021",
-                velocidadeMax:"8.2",
-                velocidadeMed:"10,5",
-                ganhoElev:"20",
-                perdaElev:"26",
-                hora:"17:15"
-            },
-        ]
-    },
-
-    {
-        isExpanded:false,
-        category_name:'Corrida boa',
-        image:require('../img/printmapa4.jpeg'),
-        tempo:"00:35:06",
-        distancia:"5,56",
-        data:"21/05/2021",
-        subcategory:[
-            {id:5,
-                tempo:"00:35:06",
-                distancia:"5,56",
-                ritmo:"5,36",
-                data:"21/05/2021",
-                velocidadeMax:"8.2",
-                velocidadeMed:"10,5",
-                ganhoElev:"20",
-                perdaElev:"26",
-                hora:"17:09"
-            },
-        ]
-    },
-];
 
 const ExpandableComponent = ({item, onClickFunction}) => {
     const [layoutHeight, setlayoutHeight] = useState(0);
@@ -127,7 +17,7 @@ const ExpandableComponent = ({item, onClickFunction}) => {
 
     const [inscrito, setInscrito]=useState(false)
     return(
-        <SafeAreaView style={{marginTop:35}}>
+        
             <View>
             <TouchableOpacity
                 style={styles.item}
@@ -224,22 +114,24 @@ const ExpandableComponent = ({item, onClickFunction}) => {
                                     <Text style={styles.txtinfor}>{item.hora} h</Text>
                                 </View>
                             </View>
-                                
-                            
-
                         </TouchableOpacity>
                     ))
                 }
             </View>
         </View>
-        </SafeAreaView>
+        
     )
 }
 
 
-export default function(){
+export default function Historico(navigation){
+
+    const [historico, setHistorico] = React
+    .useState(BDhistorico.getHistorico());
+
+
     const [multiSelect, setmultiSelect] = useState(false);
-    const [listDataSource, setlistDataSource] = useState(CONTENT);
+    const [listDataSource, setlistDataSource] = useState(historico);
 
     if (Platform.OS === 'android'){
         UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -261,15 +153,16 @@ export default function(){
     }
 
     return(
-        <SafeAreaView>
+        
             <View style={styles.container}>
-                <View style={styles.cabecalho}>
+                <View style={styles.header}>
+                    <Text style={styles.titleText}>Historico</Text>
                     <TouchableOpacity
-                        onPress={()=>setmultiSelect(!multiSelect)}   
+                        onPress={()=>setmultiSelect(!multiSelect)} 
                     >
                         <Entypo name="menu" size={24} color="black" /> 
-                        </TouchableOpacity>
-                  
+                   
+                    </TouchableOpacity>
                 </View>
                 <ScrollView>
                         {
@@ -285,7 +178,7 @@ export default function(){
                         }
                 </ScrollView>
             </View>
-        </SafeAreaView>
+        
     )
 }
 
@@ -293,20 +186,16 @@ const styles = StyleSheet.create({
     container:{
         flex:1,
     },
-
-    cabecalho:{
-        flex:1,
-        width:'100%',
-        flexDirection:'row',
-        alignContent:'center',
-        backgroundColor:"red",
-        padding:5,
        
-    },
-    
     header:{
         flexDirection:'row',
-        padding:10,
+        flex:1,
+        width:'100%',
+        alignContent:'center',
+        backgroundColor:"red",
+        marginTop:35,
+        //paddingLeft:10,
+        //position:'absolute'
     },
 
     titleText:{
@@ -374,10 +263,11 @@ const styles = StyleSheet.create({
     },
 
     img:{
+        height:250,
         width:'100%',
-        resizeMode:'contain',
-        marginBottom:-120,
-        marginTop:-115,
+        resizeMode:'cover',
+        //marginBottom:1,
+        //marginTop:-115,
     },
 
     acoes:{

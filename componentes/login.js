@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput, SafeAreaView, TouchableHighlight, Image, Button} from 'react-native';
+import { StyleSheet, Text, View,ImageBackground, TextInput, SafeAreaView, TouchableOpacity, Image, Button} from 'react-native';
 
-export default props=>{
+export default function Login ({ navigation }){
 
   const [hidePass, setHidePass] = useState(true);
       return(
-        <SafeAreaView style={styles.conteudo}>
+        <View style={styles.conteudo}>
+                
             <View style={styles.container}>
+
                 <View style={styles.bloco}>
 
                     <Image
@@ -33,19 +35,20 @@ export default props=>{
                 <View style={styles.bloco}>
                     <Button
                         title='Entrar'
-                        style={styles.botao}
-                        onPress={()=>navigation.navigate('historico')}
+                        onPress={() => navigation.navigate('Praticando')}
                     />
                 </View>
 
                 <View>
-                    <TouchableHighlight>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('Cadastro')}
+                    >
                         <Text style={styles.cadastro}>Cadastrar</Text>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
 
                 </View>
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
 

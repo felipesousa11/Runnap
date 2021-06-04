@@ -1,6 +1,12 @@
 {
   "name": "runapp",
   "displayName": "runapp",
+  "icon": "./img/icone.png",
+  "splash":{
+    "image":"./img/splash.png",
+    "resizeMode": "cover",
+    "backgroundColor":"#ffffff"
+  },
   "expo": {
     "name": "runapp",
     "slug": "runapp",

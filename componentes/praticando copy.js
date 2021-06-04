@@ -1,7 +1,7 @@
 import React, {useState, useEffect}  from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity,Animated, Button} from 'react-native';
-import {FontAwesome, Entypo, AntDesign,MaterialCommunityIcons } from '@expo/vector-icons';
-import MapView, { Polyline } from 'react-native-maps';
+import { StyleSheet, Text, View, SafeAreaView, TouchableHighlight, Button} from 'react-native';
+import { Entypo, AntDesign } from '@expo/vector-icons';
+import MapView, { Marker, Polyline } from 'react-native-maps';
 
 import * as TaskManager from 'expo-task-manager';
 import * as Location from 'expo-location';
@@ -10,11 +10,8 @@ const LOCATION_TASK_NAME = 'background-location-task';
 
 export default function (){
 
-     const [ativo, setAtivo] = useState (true);
     const [location, setLocation] = useState(null);
     const [distancia, setDistancia] = useState(0);
-    const [tempo, setTempo] = useState (0);
-    //const [velocidade, setVelocidade] = useState (0);
     const [historicoLocalizacao, setHistoricoLocalizacao] = useState([]);
     
     // --------------------
@@ -30,7 +27,7 @@ export default function (){
     startTraking = async () => {
         const { status } = await Location.requestBackgroundPermissionsAsync();
         if (status === 'granted') {
-          console.log("Iniciando serviço")
+          console.log("Inicinando serviço")
           await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
             accuracy: Location.Accuracy.High,
           });               
@@ -40,19 +37,20 @@ export default function (){
       
     
       callbackUpdate = (track) => {
-      // console.log("SIZE: ", track)
+        /*console.log("SIZE: ", track)*/
         if(track){
             let current = track[track.length-1][0].coords;
             current = {
             ...posicaoAtual,
             ...current,
-            latitudeDelta:0.0009,
-            longitudeDelta:0.0004
+            latitudeDelta: 0.0122,
+            longitudeDelta: 0.0121
             }
             setPosicaoAtual(current);
 
             if(current.latitude && rota &&  rota.length>0)
                 setDistancia(distancia+ haversine(current, rota[rota.length-1],{unit: 'km'}))
+            
             setRota([...rota,{latitude:current.latitude, longitude:current.longitude}])
         }
       }
@@ -75,25 +73,25 @@ export default function (){
     /**------------------------- */
     return(
         <SafeAreaView >
-           <View style={styles.container}>
+           <View style={estilos.container}>
 
                 <View style={{alignItems:'center'}}>
                     {/* Distancia */ }
-                    <Text style={styles.txtPrincipal} >{distancia.toFixed(2)}km</Text>
+                    <Text style={estilos.txtPrincipal} >{distancia.toFixed(2)}km</Text>
                     <Text>Distância</Text>
                 </View>
 
                 <View style={{flexDirection:'row', alignItems:'space-between'}}>
-                    <View style={styles.bloco}>
-                        <Text style={styles.txtTitulo}>00.0</Text>
+                    <View style={estilos.bloco}>
+                        <Text style={estilos.txtTitulo}>28:51</Text>
                         <View style={{flexDirection:'row', alignItems:'space-between'}}>
                             <AntDesign name="clockcircleo" size={17} color="black" />
                             <Text>Duração</Text>
                         </View>
                     </View>
 
-                    <View style={styles.bloco}>
-                        <Text style={styles.txtTitulo}>00:00</Text>
+                    <View style={estilos.bloco}>
+                        <Text style={estilos.txtTitulo}>8:51</Text>
                         <View style={{flexDirection:'row', alignItems:'space-between'}}>
                             <Entypo name="gauge" size={20} color="black" />
                             <Text>Ritmo (min/km)</Text>
@@ -101,18 +99,30 @@ export default function (){
                     </View> 
                 </View>
 
+                <View style={{flexDirection:'row', alignItems:'space-between'}}>
+                    <View style={estilos.bloco}>
+                        <Entypo name="location" size={24} color="black" />
+                    </View>
+
+                    <View style={estilos.bloco}>
+                        <Entypo name="bar-graph" size={24} color="black" />
+                    </View>
+                </View>
                 
-                
-                
+                 <TouchableHighlight onPress={startTraking}>
+                    <Text>Clique aqui para pegar a localização</Text>
+                </TouchableHighlight>
+                 
+                <Text>Latitude: {historicoLocalizacao.length}</Text>
+                <Text>Longitude: {JSON.stringify(location)}</Text>
 
                 {/* Mapa */}
                 <MapView
                     region={posicaoAtual}
                     provider="google"
                     style={{
-                        height: '70%',
+                        height: 320,
                         width: '100%',
-                        marginTop:20,
                                             
                     }}
                     initialRegion={{
@@ -123,9 +133,9 @@ export default function (){
 
                     }}
                 >
-                  <Polyline
+                 <Polyline
           coordinates={rota}
-          strokeColor="#ff3030" // fallback for when `strokeColors` is not supported by the map-provider
+          strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
           strokeColors={[
             '#7F0000',
             '#00000000', // no color, creates a "long" gradient between the previous and next coordinate
@@ -134,22 +144,14 @@ export default function (){
             '#238C23',
             '#7F0000'
           ]}
-          strokeWidth={15}
+          strokeWidth={6}
         />
                 </MapView>
                 {/* ---------------------- */}
                 
            </View>
             
-           <View style={styles.botao}>
 
-                    <TouchableOpacity onPress={startTraking}>
-                                <AntDesign name="play" size={90} color="green" />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <MaterialCommunityIcons name="stop-circle" size={90} color="red" />
-                    </TouchableOpacity>
-                </View>
         </SafeAreaView>
 
 
@@ -157,7 +159,7 @@ export default function (){
     )
 }
 
-const styles = StyleSheet.create({
+const estilos = StyleSheet.create({
 
     container:{
         paddingTop:25,
@@ -203,14 +205,7 @@ const styles = StyleSheet.create({
     },
 
     botao:{
-        flex:1,
-        flexDirection:'row',
-        justifyContent:'center',
-        alignSelf:'center',
-        position:'absolute',
-        padding:20,
-        alignItems:'center',
-        marginTop:500,
+        marginTop:10,
     }
 
 })

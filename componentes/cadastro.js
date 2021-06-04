@@ -1,9 +1,12 @@
-import React from 'react';
-import { StyleSheet, Text, View, TextInput, SafeAreaView, TouchableHighlight, Image, Button} from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, Text, View, TextInput, SafeAreaView, ScrollView, Image, Button} from 'react-native';
 
-export default props=>{
+export default function Cadastro ({ navigation }){
+
+    const [hidePass, setHidePass] = useState(true);
     return(
         <SafeAreaView>
+            <ScrollView>
             <View style={estilos.bloco}>
             
         
@@ -79,10 +82,11 @@ export default props=>{
                     <View style={estilos.bloco}>
                         <Button
                             title='Realizar cadastro'
-                            onPress={()=>navigation.navigate('Atividades')}
+                            onPress={()=>navigation.navigate('Home')}
                         />
                     </View>                                                                      
             </View>
+            </ScrollView>
         </SafeAreaView>
     )
 }
