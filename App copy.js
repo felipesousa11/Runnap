@@ -77,7 +77,7 @@ export default function App() {
 
                 <Tab.Screen
                   name="Desafios"
-                  component={Stacks}
+                  component={Desafios}
                   options={{title:'Desafios',
                   }}
                 />

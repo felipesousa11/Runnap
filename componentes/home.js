@@ -6,6 +6,10 @@ import { Entypo,MaterialCommunityIcons,FontAwesome,Ionicons,Fontisto,Feather } f
 export default function Home ({ navigation }){
     return(    
         <SafeAreaView>
+            <View style={{marginTop:70,float:'right'}}>
+                <Ionicons name="exit-outline" size={24} color="black" />
+            </View>
+
             <View style={styles.boxperfil}>
                 <Image
                     source={require('../img/logo.png')}
@@ -19,7 +23,7 @@ export default function Home ({ navigation }){
                             onPress={() => navigation.navigate('Historico')}
                         >
                             <View style={styles.box}>
-                                <Fontisto name="ampproject" size={24} color={'black'} />
+                                <Fontisto name="ampproject" size={30} color={'black'} />
                                 <Text>Historico</Text>
                             </View>
                         </TouchableOpacity>
@@ -28,7 +32,7 @@ export default function Home ({ navigation }){
                             onPress={() => navigation.navigate('Desafios')}
                         >
                             <View style={styles.box}>
-                                <Entypo name="trophy" size={24} color={'black'} />
+                                <Entypo name="trophy" size={30} color={'black'} />
                                 <Text>Desafios</Text>
                             </View>
                         </TouchableOpacity>
@@ -39,7 +43,7 @@ export default function Home ({ navigation }){
                             onPress={() => navigation.navigate('Praticando')}
                         >
                             <View style={styles.box}>
-                                <Feather name="activity" size={24} color={'black'} />
+                                <Feather name="activity" size={30} color={'black'} />
                                 <Text>Ação</Text>
                             </View>
                         </TouchableOpacity>
@@ -48,7 +52,7 @@ export default function Home ({ navigation }){
                             onPress={() => navigation.navigate('Perfil')}
                         >
                             <View style={styles.box}>
-                                <FontAwesome name="user-circle-o" size={24} color={'black'} />
+                                <FontAwesome name="user-circle-o" size={30} color={'black'} />
                                 <Text>Perfil</Text>
                             </View>
                         </TouchableOpacity>
@@ -103,6 +107,7 @@ const styles  = StyleSheet.create({
         height:150,
         alignItems:'center',
         alignContent:'center',
-        justifyContent:'center'
+        justifyContent:'center',
+
         },
 })

@@ -40,7 +40,7 @@ export default function (){
       
     
       callbackUpdate = (track) => {
-      // console.log("SIZE: ", track)
+       console.log("SIZE: ", track)
         if(track){
             let current = track[track.length-1][0].coords;
             current = {
