@@ -73,16 +73,18 @@ const ExpandableComponent = ({item, onClickFunction}) => {
                                 {inscrito?
                                 <Text></Text>
                                 :
+                                <View style={styles.box}>
                                 <View style={{flex:1,flexDirection:'row', justifyContent:'space-around'}}>
-                                    <View>
+                                    <View style={styles.linha}>
                                         <Text style={styles.text}>Realizado</Text>
-                                        <Text style={styles.text}>{item.realizado}</Text>
+                                        <Text style={styles.txtinfor}>{item.realizado}</Text>
                                     </View>
 
-                                    <View>
+                                    <View style={styles.linha}>
                                         <Text style={styles.text}>Faltam</Text>
-                                        <Text style={styles.text}>{item.restante}</Text>
+                                        <Text style={styles.txtinfor}>{item.restante}</Text>
                                     </View>
+                                </View>
                                 </View>
                                 }
                                 <Button
@@ -181,7 +183,7 @@ const styles = StyleSheet.create({
     },
 
     item:{
-        paddingBottom:25,
+        //paddingBottom:25,
       
     },
 
@@ -199,8 +201,7 @@ const styles = StyleSheet.create({
         paddingLeft:10,
         paddingRight:10,
         backgroundColor:'#fff',
-        borderBottomWidth:0.5,
-        
+              
     },
 
     text:{
@@ -223,7 +224,7 @@ const styles = StyleSheet.create({
     box:{
         flex:1,
         flexDirection:'row',
-        
+       
     },
 
     linha:{
@@ -239,7 +240,7 @@ const styles = StyleSheet.create({
         resizeMode:'contain',
         paddingBottom:-70,
         paddingTop:-70,
-       // marginBottom:-160,
+        //marginBottom:-100,
         //marginTop:-160,
     }
 
