@@ -82,7 +82,7 @@ export default function App() {
 
                 <Stack.Screen
                   name="Praticando"
-                  component={Mapa}
+                  component={Praticando}
                   options={{title:'Praticando'}}
                 />
 

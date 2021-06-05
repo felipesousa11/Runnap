@@ -1,7 +1,7 @@
 import React, {useState, useEffect}  from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity,Animated, Button} from 'react-native';
 import {FontAwesome, Entypo, AntDesign,MaterialCommunityIcons } from '@expo/vector-icons';
-import MapView, { Polyline } from 'react-native-maps';
+import MapView, { LocalTile, Polyline } from 'react-native-maps';
 
 import * as TaskManager from 'expo-task-manager';
 import * as Location from 'expo-location';
@@ -10,11 +10,13 @@ const LOCATION_TASK_NAME = 'background-location-task';
 
 export default function (){
 
-     const [ativo, setAtivo] = useState (true);
+    const [ativo, setAtivo] = useState (true);
     const [location, setLocation] = useState(null);
     const [distancia, setDistancia] = useState(0);
     const [tempo, setTempo] = useState (0);
-    //const [velocidade, setVelocidade] = useState (0);
+    const [speed, setSpeed] = useState (0);
+    
+
     const [historicoLocalizacao, setHistoricoLocalizacao] = useState([]);
     
     // --------------------
@@ -32,10 +34,17 @@ export default function (){
         if (status === 'granted') {
           console.log("Iniciando serviço")
           await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-            accuracy: Location.Accuracy.High,
+            accuracy: Location.Accuracy.BestForNavigation,
           });               
         }    
       };
+
+    stopTraking = async () => {
+        const { status } = await Location.requestBackgroundPermissionsAsync();
+        if (status === 'granted') { 
+            await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
+        }
+    }
 
       
     
@@ -68,7 +77,10 @@ export default function (){
       
             let x = await Location.getProviderStatusAsync();
             setLocation(x);
-            startTraking();
+            //startTraking();
+
+            //let speed = await geolocationCoordinatesInstance.speed();
+            //setSpeed(speed)
           })();
     }, [])
 
@@ -93,7 +105,7 @@ export default function (){
                     </View>
 
                     <View style={styles.bloco}>
-                        <Text style={styles.txtTitulo}>00:00</Text>
+                        <Text style={styles.txtTitulo}>{speed}</Text>
                         <View style={{flexDirection:'row', alignItems:'space-between'}}>
                             <Entypo name="gauge" size={20} color="black" />
                             <Text>Ritmo (min/km)</Text>
@@ -146,7 +158,7 @@ export default function (){
                     <TouchableOpacity onPress={startTraking}>
                                 <AntDesign name="play" size={90} color="green" />
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={stopTraking}>
                         <MaterialCommunityIcons name="stop-circle" size={90} color="red" />
                     </TouchableOpacity>
                 </View>

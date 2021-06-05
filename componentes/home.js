@@ -6,10 +6,7 @@ import { Entypo,MaterialCommunityIcons,FontAwesome,Ionicons,Fontisto,Feather } f
 export default function Home ({ navigation }){
     return(    
         <SafeAreaView>
-            <View style={{marginTop:70,float:'right'}}>
-                <Ionicons name="exit-outline" size={24} color="black" />
-            </View>
-
+            
             <View style={styles.boxperfil}>
                 <Image
                     source={require('../img/logo.png')}
