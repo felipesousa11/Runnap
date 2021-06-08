@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, SafeAreaView, TouchableHighlight, Image, Button} from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Touchableighlight, Image, Button} from 'react-native';
 import { Entypo,MaterialCommunityIcons,FontAwesome5,Ionicons } from '@expo/vector-icons';
 export default props=>{
     return(    

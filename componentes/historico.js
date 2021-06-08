@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
-import { Text, View, StyleSheet,SafeAreaView, ScrollView, TouchableOpacity,Button,Image, LayoutAnimation, Platform, UIManager } from 'react-native';
+import { Text, View, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity,Button,Image, LayoutAnimation, Platform, UIManager } from 'react-native';
 import {FontAwesome5, FontAwesome, MaterialCommunityIcons,SimpleLineIcons,AntDesign, Entypo,Ionicons } from '@expo/vector-icons';
 import BDhistorico from './bd_historico';
+
 
 
 const ExpandableComponent = ({item, onClickFunction}) => {
@@ -156,13 +157,7 @@ export default function Historico(navigation){
         
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <Text style={styles.titleText}>Historico</Text>
-                    <TouchableOpacity
-                        onPress={()=>setmultiSelect(!multiSelect)} 
-                    >
-                        <Entypo name="menu" size={24} color="black" /> 
-                   
-                    </TouchableOpacity>
+                    
                 </View>
                 <ScrollView>
                         {
@@ -182,7 +177,7 @@ export default function Historico(navigation){
     )
 }
 
-const styles = StyleSheet.create({
+const styles  = StyleSheet.create({
     container:{
         flex:1,
     },
@@ -212,7 +207,6 @@ const styles = StyleSheet.create({
 
     item:{
         paddingBottom:20,
-      
     },
 
     itemText:{
@@ -279,7 +273,6 @@ const styles = StyleSheet.create({
         paddingRight:15,
         marginBottom:15,
         justifyContent:'space-between',
-
     },
 
 });

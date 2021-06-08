@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import { Text, View, StyleSheet,SafeAreaView, ScrollView, TouchableOpacity,Button,Image, LayoutAnimation, Platform, UIManager } from 'react-native';
-import {FontAwesome5, FontAwesome, MaterialCommunityIcons,Entypo } from '@expo/vector-icons';
+import { Text, View, StyleSheet, ScrollView, TouchableOpacity,Button,Image, LayoutAnimation, Platform, UIManager } from 'react-native';
 import BDdesafios from './bd_desafios'
-import { back } from 'react-native/Libraries/Animated/src/Easing';
 
 
 const ExpandableComponent = ({item, onClickFunction}) => {

@@ -1,14 +1,17 @@
 import React, {useState, useEffect}  from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity,Animated, Button} from 'react-native';
-import {FontAwesome, Entypo, AntDesign,MaterialCommunityIcons } from '@expo/vector-icons';
-import MapView, { LocalTile, Polyline } from 'react-native-maps';
+import { Entypo, AntDesign,MaterialCommunityIcons } from '@expo/vector-icons';
+import MapView, { Polyline } from 'react-native-maps';
 
 import * as TaskManager from 'expo-task-manager';
 import * as Location from 'expo-location';
 import haversine from 'haversine';
+import Cronometro from './cronometro'
+
 const LOCATION_TASK_NAME = 'background-location-task';
 
-export default function (){
+
+export default function ({navigation}){
 
     const [ativo, setAtivo] = useState (true);
     const [location, setLocation] = useState(null);
@@ -44,9 +47,7 @@ export default function (){
         if (status === 'granted') { 
             await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
         }
-    }
-
-      
+    };
     
       callbackUpdate = (track) => {
        console.log("SIZE: ", track)
@@ -97,7 +98,7 @@ export default function (){
 
                 <View style={{flexDirection:'row', alignItems:'space-between'}}>
                     <View style={styles.bloco}>
-                        <Text style={styles.txtTitulo}>00.0</Text>
+                        <Text style={styles.txtTitulo}>00.00</Text>
                         <View style={{flexDirection:'row', alignItems:'space-between'}}>
                             <AntDesign name="clockcircleo" size={17} color="black" />
                             <Text>Duração</Text>
@@ -146,7 +147,7 @@ export default function (){
             '#238C23',
             '#7F0000'
           ]}
-          strokeWidth={15}
+          strokeWidth={5}
         />
                 </MapView>
                 {/* ---------------------- */}
@@ -154,11 +155,13 @@ export default function (){
            </View>
             
            <View style={styles.botao}>
-
+                    <TouchableOpacity onPress={stopTraking}>
+                        <MaterialCommunityIcons name="pause-circle" size={90} color="yellow" />
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={startTraking}>
                                 <AntDesign name="play" size={90} color="green" />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={stopTraking}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Finalizar')}>
                         <MaterialCommunityIcons name="stop-circle" size={90} color="red" />
                     </TouchableOpacity>
                 </View>
@@ -166,7 +169,7 @@ export default function (){
 
 
 
-    )
+    );
 }
 
 const styles = StyleSheet.create({

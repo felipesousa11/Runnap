@@ -11,8 +11,9 @@ import Praticando from './componentes/praticando'
 import Desafios from './componentes/desafios'
 import Perfil from './componentes/perfil'
 import Cadastro from './componentes/cadastro'
-import Mapa from './componentes/mapa'
+import Finalizar from './componentes/finalizar'
 import Home from './componentes/home'
+import Cronometro from './componentes/cronometro'
 
 const Tab=createBottomTabNavigator();
 const Stack =createStackNavigator();
@@ -76,7 +77,7 @@ export default function App() {
 
                 <Stack.Screen
                     name="Historico"
-                    component={Historico}
+                    component={Cronometro}
                     options={{title:'Historico',}}
                 />
 
@@ -90,6 +91,11 @@ export default function App() {
                   name="Perfil"
                   component={Perfil}
                   options={{title:'Perfil'}}
+                />
+                <Stack.Screen
+                  name="Finalizar"
+                  component={Finalizar}
+                  options={{title:'Finalizar'}}
                 />
     </Stack.Navigator>
     </NavigationContainer>

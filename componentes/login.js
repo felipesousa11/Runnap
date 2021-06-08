@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View,ImageBackground, TextInput, SafeAreaView, TouchableOpacity, Image, Button} from 'react-native';
+import { Ionicons, Feather } from '@expo/vector-icons';
 
 export default function Login ({ navigation }){
 
-  const [hidePass, setHidePass] = useState(true);
+  const [email,setEmail]= useState('')
+  const [senha,setSenha]= useState('')
+  const [mostrar,setMostrar]= useState(true)
       return(
         <View style={styles.conteudo}>
                 
@@ -19,7 +22,11 @@ export default function Login ({ navigation }){
                     <TextInput 
                         style={styles.txt}
                         autoFocus={false}
+                        autoCorrect={false}
                         placeholder="Seu email cadastrado"
+                        onChangeText={(texto)=>setEmail()}
+                        value={email}
+                        keyboardType="email-address"
                     ></TextInput> 
                 </View>
                 
@@ -27,16 +34,34 @@ export default function Login ({ navigation }){
                     <TextInput 
                         style={styles.txt}
                         autoFocus={false}
+                        autoCorrect={false}
                         placeholder="Sua senha"
-                        secureTextEntry={hidePass}
+                        secureTextEntry={mostrar}
+                        onChangeText={(texto)=>setSenha(texto)}
+                        value={senha}
                     ></TextInput> 
+                    <TouchableOpacity 
+                        style={styles.icone}
+                        //trocando o valor da constante para aparecer a senha
+                        onPress={()=>setMostrar(!mostrar)}
+                    >
+                       {mostrar?
+                            <Feather name="eye-off" size={24} color="black" />
+                            :
+                            <Ionicons name="eye" color="black" size={24}/>
+                            
+
+                        }
+                    </TouchableOpacity>
                 </View>
 
                 <View style={styles.bloco}>
-                    <Button
-                        title='Entrar'
-                        onPress={() => navigation.navigate('Praticando')}
-                    />
+                    <TouchableOpacity 
+                        style={styles.botao}
+                        onPress={() => navigation.navigate('Home')}
+                    >
+                        <Text style={{color:'#fff'}}>Entrar</Text>
+                    </TouchableOpacity>
                 </View>
 
                 <View>
@@ -71,47 +96,54 @@ const styles = StyleSheet.create({
         width:'80%',
         borderRadius:5,
         margin:20
-      },    
+    },    
 
-bloco:{
-    marginBottom:20,
-    padding:15,
-    width:"80%",
-  },
+    bloco:{
+        marginBottom:10,
+        padding:10,
+        width:"80%",
+        justifyContent:"center",
+        alignItems:'center'
+    },
 
-  cadastro:{
-    paddingBottom:10,
-    color:"rgb(101, 37, 131)",
-  },
+    cadastro:{
+        paddingBottom:10,
+        color:"rgb(101, 37, 131)",
+    },
 
-  txt:{
-    width:'100%',
-    borderWidth:1,
-    borderColor:'#000',
-    padding:10,
-    borderRadius:10,
-  },
+    txt:{
+        width:'100%',
+        borderWidth:1,
+        borderColor:'#000',
+        padding:10,
+        borderRadius:10,
+    },
 
-  botao:{
-    backgroundColor: 'red',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding:5,
-    textAlign:'center',
-    color:'#fff',
-    borderRadius:15,
-},
+    botao:{
+        backgroundColor:"rgb(101, 37, 131)",
+        width:'90%',
+        height:45,
+        alignItems:'center',
+        justifyContent:'center',
+        borderRadius:7
+    },
 
-txtBtn:{
-  textAlign:'center',
-  color:'#fff',
-  fontSize:15,
-  textTransform:'uppercase'
-},
+    txtBtn:{
+        textAlign:'center',
+        color:'#fff',
+        fontSize:15,
+        textTransform:'uppercase'
+    },
 
-img:{
-    width:'100%',
-    resizeMode:'contain',
-    marginTop:100,
-  },
+    img:{
+        width:'100%',
+        resizeMode:'contain',
+        marginTop:100,
+    },
+    icone:{
+        width:"15%",
+        height:45,
+        marginTop:-30,
+        marginLeft:200
+    },
 })
