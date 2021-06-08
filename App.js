@@ -77,7 +77,7 @@ export default function App() {
 
                 <Stack.Screen
                     name="Historico"
-                    component={Cronometro}
+                    component={Historico}
                     options={{title:'Historico',}}
                 />
 

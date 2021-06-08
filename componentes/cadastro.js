@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput, SafeAreaView, ScrollView,TouchableOpacity,Image} from 'react-native';
+import { StyleSheet, Text, View, TextInput, SafeAreaView, ScrollView,TouchableOpacity} from 'react-native';
 import { Ionicons, Feather  } from '@expo/vector-icons';
 
 export default function Cadastro ({ navigation }){
@@ -77,7 +77,7 @@ export default function Cadastro ({ navigation }){
                                         autoCorrect={false}
                                         onChangeText={(texto)=>setAltura(texto)}
                                         value={altura}
-                                        keyboardType="numbers-and-punctuation"
+                                        keyboardType="numeric"
                                     />
                                 </View>
 
@@ -88,7 +88,7 @@ export default function Cadastro ({ navigation }){
                                         autoCorrect={false}
                                         onChangeText={(texto)=>setPeso(texto)}
                                         value={peso}
-                                        keyboardType="numbers-and-punctuation"
+                                        keyboardType="numeric"
                                     />
                                 </View>
                                 

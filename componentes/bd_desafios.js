@@ -92,4 +92,5 @@ export default class BDdesafios {
     static getDesafios = () => {      
       return desafios;
     }
-}
+
+  }

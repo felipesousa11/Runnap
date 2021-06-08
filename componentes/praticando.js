@@ -1,5 +1,5 @@
 import React, {useState, useEffect}  from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity,Animated, Button} from 'react-native';
+import { Dimensions,StyleSheet, Text, View, SafeAreaView, TouchableOpacity,Animated, Button} from 'react-native';
 import { Entypo, AntDesign,MaterialCommunityIcons } from '@expo/vector-icons';
 import MapView, { Polyline } from 'react-native-maps';
 
@@ -56,8 +56,8 @@ export default function ({navigation}){
             current = {
             ...posicaoAtual,
             ...current,
-            latitudeDelta:0.0009,
-            longitudeDelta:0.0004
+            latitudeDelta:0.009,
+            longitudeDelta:0.004
             }
             setPosicaoAtual(current);
 
@@ -99,7 +99,7 @@ export default function ({navigation}){
                 <View style={{flexDirection:'row', alignItems:'space-between'}}>
                     <View style={styles.bloco}>
                         <Text style={styles.txtTitulo}>00.00</Text>
-                        <View style={{flexDirection:'row', alignItems:'space-between'}}>
+                        <View style={styles.linha}>
                             <AntDesign name="clockcircleo" size={17} color="black" />
                             <Text>Duração</Text>
                         </View>
@@ -107,7 +107,7 @@ export default function ({navigation}){
 
                     <View style={styles.bloco}>
                         <Text style={styles.txtTitulo}>{speed}</Text>
-                        <View style={{flexDirection:'row', alignItems:'space-between'}}>
+                        <View style={styles.linha}>
                             <Entypo name="gauge" size={20} color="black" />
                             <Text>Ritmo (min/km)</Text>
                         </View>
@@ -125,7 +125,7 @@ export default function ({navigation}){
                     style={{
                         height: '70%',
                         width: '100%',
-                        marginTop:20,
+                        marginTop:45,
                                             
                     }}
                     initialRegion={{
@@ -147,7 +147,7 @@ export default function ({navigation}){
             '#238C23',
             '#7F0000'
           ]}
-          strokeWidth={5}
+          strokeWidth={7}
         />
                 </MapView>
                 {/* ---------------------- */}
@@ -156,13 +156,13 @@ export default function ({navigation}){
             
            <View style={styles.botao}>
                     <TouchableOpacity onPress={stopTraking}>
-                        <MaterialCommunityIcons name="pause-circle" size={90} color="yellow" />
+                        <MaterialCommunityIcons name="pause-circle" size={90} color="#63b8ff" />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={startTraking}>
-                                <AntDesign name="play" size={90} color="green" />
+                                <AntDesign name="play" size={90} color="#00cd66" />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.navigate('Finalizar')}>
-                        <MaterialCommunityIcons name="stop-circle" size={90} color="red" />
+                        <MaterialCommunityIcons name="stop-circle" size={90} color="#ff3030" />
                     </TouchableOpacity>
                 </View>
         </SafeAreaView>
@@ -186,6 +186,11 @@ const styles = StyleSheet.create({
         marginTop:15,
     },
     
+    linha:{
+        flexDirection:'row', 
+        alignItems:'stretch'
+    },
+
     txtTitulo:{
         fontSize:30,
     },
@@ -225,7 +230,8 @@ const styles = StyleSheet.create({
         position:'absolute',
         padding:20,
         alignItems:'center',
-        marginTop:500,
+        width:Dimensions.get("window").width,
+        height:Dimensions.get("window").height+630
     }
 
 })

@@ -89,16 +89,8 @@ const ExpandableComponent = ({item, onClickFunction}) => {
                                     style={styles.botao}
                                     title={inscrito?"Aceitar desafio":"Você esta no desafio!"}
                                     onPress={()=>setInscrito(!inscrito)}
-                                    
                                 />
-                                
                             </View> 
-
-                            
-                               
-                                
-                            
-
                         </TouchableOpacity>
                     ))
                 }
@@ -180,11 +172,6 @@ const styles = StyleSheet.create({
         fontSize:18,
     },
 
-    item:{
-        //paddingBottom:25,
-      
-    },
-
     itemText:{
         padding:5,
         fontSize:20,
@@ -208,7 +195,7 @@ const styles = StyleSheet.create({
 
     txtinfor:{
         fontSize:20,
-        color:'red',
+        color:'#rgb(101,37,131)',
     },
 
 
