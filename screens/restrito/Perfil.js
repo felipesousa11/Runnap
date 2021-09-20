@@ -1,6 +1,6 @@
 import React ,{useState,useEffect} from 'react';
 import { Text, View, Image, TouchableOpacity, FlatList} from 'react-native';
-import { Entypo, FontAwesome,Fontisto,Feather } from '@expo/vector-icons';
+import { Entypo, FontAwesome,Fontisto,Feather,AntDesign,Ionicons } from '@expo/vector-icons';
 import {styles} from '../../assets/style/Style';
 import Menutopo from '../../assets/components/Menutopo';
 import firebase from '../../firebaseConfig';
@@ -57,7 +57,15 @@ export default function Perfil ({ navigation }){
 
     return(    
         <View style={[styles.container, styles.containertop]}>
-        <Menutopo title='Perfil' navigation={navigation}/>
+            <View style={styles.topo}>
+                <TouchableOpacity style={styles.buttonNews}>
+                    <Ionicons name="ios-notifications-circle" size={30} color="black" />
+                </TouchableOpacity>
+                <Text style={styles.title}>Perfil</Text>
+            <TouchableOpacity style={styles.buttonMenu}  onPress={() => {logout()}}>
+                <AntDesign name="logout" size={24} color="black" />
+            </TouchableOpacity>
+        </View>
 
         
 
@@ -98,21 +106,9 @@ export default function Perfil ({ navigation }){
                 <TouchableOpacity 
                     onPress={() => {update()}}
                 >
-                    <Text>Editar</Text>
+                    <Feather name="edit" size={24} color="black" />
                 </TouchableOpacity>
             </View>
-                  <View>
-                <TouchableOpacity 
-                    onPress={() => {logout()}}
-                >
-                    <Text>SAIR</Text>
-                </TouchableOpacity>
-            </View>
-
-
-            
-
-            
      </View>
     );
 }

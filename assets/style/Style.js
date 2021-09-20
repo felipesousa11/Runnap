@@ -76,6 +76,17 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'space-between',
     },
+    topoatividade:{
+        flexDirection:'row',
+        paddingTop:40,
+        paddingBottom:15,
+        paddingRight:40,
+        paddingLeft:0,
+        width:'100%',
+        backgroundColor:'#F33329',
+        alignItems:'center',
+        justifyContent:'space-between',
+    },
 
     title:{
         width:'80%',

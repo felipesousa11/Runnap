@@ -73,6 +73,7 @@ export default function Restrito ({ navigation }){
                 <Tab.Screen name="Feed" component={Feed} options={{title:'Feed',}}/>
                 <Tab.Screen name="Gravar" component={Gravar} options={{title:'Gravar'}}/>
                 <Tab.Screen name="Perfil" component={Perfil} options={{title:'Perfil'}}/>
+                
              
       </Tab.Navigator>
   

@@ -1,6 +1,6 @@
 import React ,{useState,useEffect} from 'react';
 import { Text, TextInput, View, TouchableOpacity,KeyboardAvoidingView  } from 'react-native';
-import { Entypo, FontAwesome,Fontisto,Feather } from '@expo/vector-icons';
+import { Entypo, FontAwesome,Fontisto,Feather,Ionicons } from '@expo/vector-icons';
 import {styles} from '../../assets/style/Style';
 import Menutopo from '../../assets/components/Menutopo';
 import firebase from '../../firebaseConfig';
@@ -64,7 +64,6 @@ export default function Atividade ({ navigation }){
         setAno(txtAno)
     }
 
-     
     function pushFirebase () {
         try{
             firebase.firestore().collection('atividades').add({
@@ -95,7 +94,12 @@ export default function Atividade ({ navigation }){
     return(    
        
         <View style={[styles.container, styles.containertop]}>
-            <Menutopo title='Atividade' navigation={navigation}/>
+           <View style={styles.topoatividade}>
+            <TouchableOpacity style={styles.buttonNews}>
+                <Ionicons name="arrow-undo-outline" size={24} color="black" />
+            </TouchableOpacity>
+                <Text style={styles.title}>Atividade</Text>
+        </View>
        
             <KeyboardAvoidingView> 
 <View style={styles.container}>
@@ -105,6 +109,7 @@ export default function Atividade ({ navigation }){
     <TextInput
         style={styles.input}
         placeholder="Nome da atividade"
+        placeholderTextColor="black"
         onChangeText={txtnome => onChangeNome(txtnome)} 
         value={nome}
     />
@@ -112,6 +117,7 @@ export default function Atividade ({ navigation }){
     <TextInput
         style={styles.input}
         placeholder="Distancia"
+        placeholderTextColor="black"
         onChangeText={txtDistancia => onChangeDistancia(txtDistancia)} 
         value={distancia}
         keyboardType='numeric'
@@ -121,6 +127,7 @@ export default function Atividade ({ navigation }){
         <TextInput
             style={styles.inputnum}
             placeholder="Hora"
+            placeholderTextColor="black"
             onChangeText={txtHora => onChangeHora(txtHora)} 
             value={hora}
             keyboardType='numeric'
@@ -129,6 +136,7 @@ export default function Atividade ({ navigation }){
         <TextInput
             style={styles.inputnum}
             placeholder="Minutos"
+            placeholderTextColor="black"
             onChangeText={txtMinuto => onChangeMinuto(txtMinuto)} 
             value={minuto}
             keyboardType='numeric'
@@ -138,6 +146,7 @@ export default function Atividade ({ navigation }){
         <TextInput
             style={styles.inputnum}
             placeholder="Segundos"
+            placeholderTextColor="black"
             onChangeText={txtSegundo => onChangeSegundo(txtSegundo)} 
             value={segundo}
             keyboardType='numeric'
@@ -149,6 +158,7 @@ export default function Atividade ({ navigation }){
         <TextInput
             style={styles.inputnum}
             placeholder="Dia"
+            placeholderTextColor="black"
             onChangeText={txtDia => onChangeDia(txtDia)} 
             value={dia}
             keyboardType='numeric'
@@ -157,6 +167,7 @@ export default function Atividade ({ navigation }){
         <TextInput
             style={styles.inputnum}
             placeholder="Mês"
+            placeholderTextColor="black"
             onChangeText={txtMes => onChangeMes(txtMes)} 
             value={mes}
             keyboardType='numeric'
@@ -165,6 +176,7 @@ export default function Atividade ({ navigation }){
         <TextInput
             style={styles.inputnum}
             placeholder="Ano"
+            placeholderTextColor="black"
             onChangeText={txtAno => onChangeAno(txtAno)} 
             value={ano}
             keyboardType='numeric'
