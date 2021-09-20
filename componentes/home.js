@@ -54,6 +54,26 @@ export default function Home ({ navigation }){
                         </View>
                     </TouchableOpacity>
                 </View>
+
+                <View style={{flexDirection:'row', justifyContent:'center'}}>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('Addatividade')}
+                    >
+                        <View style={styles.box}>
+                            <Feather name="activity" size={30} color={"rgb(101, 37, 131)"} />
+                            <Text style={styles.txticone}>+ atividade</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('Listatividade')}
+                    >
+                        <View style={styles.box}>
+                            <FontAwesome name="user-circle-o" size={30} color={"rgb(101, 37, 131)"} />
+                            <Text style={styles.txticone}>+ desafio</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
                 
             </View>
 
@@ -95,7 +115,8 @@ const styles  = StyleSheet.create({
         shadowOpacity: 0.2,
         elevation: 3,
         width:150,
-        height:150,
+        height:100,
+        flexDirection:'row',
         alignItems:'center',
         alignContent:'center',
         justifyContent:'center',

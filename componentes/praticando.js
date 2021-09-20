@@ -85,6 +85,8 @@ export default function ({navigation}){
           })();
     }, [])
 
+    
+
     /**------------------------- */
     return(
         <SafeAreaView >

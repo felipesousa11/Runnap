@@ -1,105 +1,157 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import { StyleSheet, Text, View, TextInput, SafeAreaView, ScrollView,TouchableOpacity} from 'react-native';
 import { Ionicons, Feather  } from '@expo/vector-icons';
+import firebase from './firebaseConfig';
+import RNPickerSelect from 'react-native-picker-select';
+import * as ImagePicker from 'react-native-image-picker';
+import * as Permissions from 'expo-permissions';
+
+
 
 export default function Cadastro ({ navigation }){
 
-    const [nome, setNome]= useState('')
-    const [data, setData]= useState('')
-    const [altura, setAltura]= useState('')
-    const [peso, setPeso]= useState('')
-    const [sexo, setSexo]= useState('')
+    if (firebase.auth().currentUser !==null){
+        
+    }else{
+        navigation.navigate('Login')
+    }
+    
+    const user_id = firebase.auth().currentUser.uid
     const [email, setEmail]= useState('')
     const [senha, setSenha]= useState('')
-    const [cadsenha, setCadsenha]= useState('')
     const [mostrar, setMostrar]= useState(true)
+    const [nome,setNome]= useState('')
+    const [sexo,setSexo]= useState('')
+    const [altura,setAltura]= useState('')
+    const [peso,setPeso]= useState('')
+    const [idade, setIdade]= useState ('')
+    const [imc, setImc]= useState ('')
+    const [image, setImage]= useState ('')
+
+    const onChangeNome = (txtNome) => {
+        setNome(txtNome)
+    }
+  
+    const onChangeSexo = (txtSexo) => {
+      setSexo(txtSexo)
+  }
+  
+  const onChangeAltura = (txtAltura) => {
+      setAltura(txtAltura)
+  }
+  
+    const onChangePeso = (txtPeso) => {
+      setPeso(txtPeso)
+  }
+  
+  const onChangeIdade = (txtIdade) => {
+      setIdade(txtIdade)
+  }
+  
+  const onChangeFoto = (Foto) => {
+      setFoto(Foto)
+  }
+
+  function cadastrofull () {
+    try{
+        firebase.firestore().collection('user').add({
+            nome: nome,
+            altura: altura,
+            peso: peso,
+            idade: idade,
+            imc: peso/(altura*altura),
+            image: image,
+            user_id:user_id,
+        });
     
-    
+        navigation.navigate('Home')
+        
+    }catch (error){
+        alert(error)
+    }
+  
+}
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== 'web') {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!');
+        }
+      }
+    })();
+  }, []);
+
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.mediaTypesOptinos.All(),
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+    });
+
+    if (!result.cancelled) {
+      this.uploadImage(result.uri, "test-image")
+      .then(() => {
+          Alert.alert("Sucesso");
+      })
+      .catch((error) => {
+          Alert.alert(error);
+      });
+    }
+  }
+    function cadastrar(){
+        firebase.auth().createUserWithEmailAndPassword(email, senha)
+        .then((userCredential) => {
+            alert('Cadastrado com sucesso')
+            let user = userCredential.user;
+            navigation.navigate('Home');
+        
+    // ...
+    })
+  .catch((error) => {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    alert(errorCode, errorMessage);
+    // ..
+  });
+}
 
     return(
-        <SafeAreaView>
-            <ScrollView>
+        
                 <View style={estilos.conteudo}>
-                    <View style={estilos.container}>
+                    <View style={estilos.container}> 
                         <View style={estilos.bloco}>
-                        
+                                
                                 <View style={estilos.bloco}>
                                     <TextInput 
                                         style={estilos.txt}
-                                        autoFocus={false}
-                                        autoCorrect={false}
                                         placeholder="Nome"
-                                        onChangeText={(texto)=>setNome(texto)}
+                                        onChangeText={txtNome => onChangeNome(txtNome)} 
                                         value={nome}
                                     ></TextInput> 
                                 </View>
-
-                                <View style={estilos.bloco}>
-                                    <TextInput 
-                                        style={estilos.txt}
-                                        autoFocus={false}
-                                        autoCorrect={false}
-                                        placeholder="Data de Nascimento - ex: 00/00/0000"
-                                        onChangeText={(texto)=>setData(texto)}
-                                        value={data}
-                                        keyboardType="numbers-and-punctuation"
-                                    ></TextInput> 
-                                </View>
-
-                                <View style={estilos.bloco}>
-                                    <TextInput 
-                                        style={estilos.txt}
-                                        autoFocus={false}
-                                        placeholder="Sexo - ex: F/M"
-                                        autoCorrect={false}
-                                        onChangeText={(texto)=>setSexo(texto)}
-                                        value={sexo}   
-                                    ></TextInput> 
-                                </View>                                         
-                                                            
-                            
                                 <View style={estilos.bloco}>
                                     <TextInput 
                                         style={estilos.txt}
                                         autoFocus={false}
                                         placeholder="Email"
                                         autoCorrect={false}
-                                        onChangeText={(texto)=>setEmail(texto)}
+                                        onChangeText={email => setEmail(email)} 
                                         value={email}
                                         keyboardType="email-address"
                                     ></TextInput> 
                                 </View>
-
-                                <View style={estilos.bloco}>
-                                    <TextInput
-                                        style={estilos.txt}
-                                        placeholder="Digite sua altura"
-                                        autoCorrect={false}
-                                        onChangeText={(texto)=>setAltura(texto)}
-                                        value={altura}
-                                        keyboardType="numeric"
-                                    />
-                                </View>
-
-                                <View style={estilos.bloco}>
-                                    <TextInput
-                                        style={estilos.txt}
-                                        placeholder="Digite seu peso"
-                                        autoCorrect={false}
-                                        onChangeText={(texto)=>setPeso(texto)}
-                                        value={peso}
-                                        keyboardType="numeric"
-                                    />
-                                </View>
-                                
+                              
                                 <View style={estilos.bloco}>
                                     <TextInput 
-                                        style={estilos.txt}
+                                        style={estilos.txtsenha}
                                         autoFocus={false}
                                         placeholder="Cadastrar Senha"
                                         secureTextEntry={mostrar}
                                         autoCorrect={false}
-                                        onChangeText={(texto)=>setSenha(texto)}
+                                        onChangeText={senha => setSenha(senha)} 
                                         value={senha}
                                     ></TextInput>
 
@@ -115,12 +167,60 @@ export default function Cadastro ({ navigation }){
                                         }
                                     </TouchableOpacity> 
                                 </View>
+                                <View style={estilos.bloco}>
+                                    <Text>Sexo:</Text>
+                                    <RNPickerSelect
+                                        style={estilos.txt}
+                                        onValueChange={(value) => onChangeSexo(value)}
+                                        items={[
+                                            { label: 'Feminino', value: 'Feminino' },
+                                            { label: 'Masculino', value: 'Masculino' },
+                                        ]}
+                                    />
+                                </View>
+                                <View style={estilos.bloco}>
+                                    <TextInput 
+                                        style={estilos.txt}
+                                        placeholder="Sua altura"
+                                        keyboardType="numeric"
+                                        onChangeText={txtAltura => onChangeAltura(txtAltura)} 
+                                        value={altura}
+                                    ></TextInput> 
+                                </View>
+                                <View style={estilos.bloco}>
+                                    <TextInput 
+                                        style={estilos.txt}
+                                        placeholder="Seu peso"
+                                        keyboardType="numeric"
+                                        onChangeText={txtPeso => onChangePeso(txtPeso)} 
+                                        value={peso}
+                                    ></TextInput> 
+                                </View>
+
+                                <View style={estilos.bloco}>
+                                    <TextInput 
+                                        style={estilos.txt}
+                                        placeholder="Sua idade"
+                                        keyboardType="numeric"
+                                        onChangeText={txtIdade => onChangeIdade(txtIdade)} 
+                                        value={idade}
+                                    ></TextInput> 
+                                </View>
+                                <View style={estilos.bloco}>
+                                    <TouchableOpacity 
+                                        style={estilos.botao}
+                                        onPress={pickImage}
+                                    >
+                                        <Text style={{color:'#000'}}>Foto</Text>
+                                    
+                                    </TouchableOpacity>
+                                </View>
                                 
 
                                 <View style={estilos.bloco}>
                                     <TouchableOpacity
                                         style={estilos.btnLogar}
-                                        onPress={() => navigation.navigate('Home')}
+                                        onPress={() => {cadastrar()}}
                                     >
                                         <Text style={{color:'#fff'}}>Cadastrar</Text>
                                     </TouchableOpacity>
@@ -128,8 +228,7 @@ export default function Cadastro ({ navigation }){
                         </View>
                     </View>
                 </View>    
-            </ScrollView>
-        </SafeAreaView>
+           
     )
 }
 
@@ -156,6 +255,9 @@ const estilos = StyleSheet.create({
     bloco:{
         marginBottom:10,
         padding:10,
+        width:"100%",
+        justifyContent:"center",
+        alignItems:'center'
     },
 
     txt:{
@@ -164,6 +266,21 @@ const estilos = StyleSheet.create({
         borderColor:'#000',
         padding:10,
         borderRadius:10,
+    },
+    txtsenha:{
+        width:'100%',
+        height:40,
+        borderWidth:1,
+        borderColor:'#000',
+        padding:10,
+        borderRadius:10,
+    },
+    img:{
+        width:'50%',
+        height:150,
+        resizeMode:'contain',
+        marginBottom:-40,
+        marginTop:-35
     },
 
     btnLogar:{
@@ -187,9 +304,11 @@ const estilos = StyleSheet.create({
     },
     icone:{
         width:"15%",
-        height:45,
+        //height:45,
         marginBottom:-10,
         marginTop:-30,
-        marginLeft:230
+        marginLeft:230,
+        paddingRight:5,
+        
     },
 })

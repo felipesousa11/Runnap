@@ -1,12 +1,40 @@
-import React, {useState} from 'react';
-import { StyleSheet, Text, View,ImageBackground, TextInput, SafeAreaView, TouchableOpacity, Image, Button} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { StyleSheet, Text, View,TextInput, TouchableOpacity, Image} from 'react-native';
 import { Ionicons, Feather } from '@expo/vector-icons';
+import firebase from './firebaseConfig';
+import Home from './home'
 
 export default function Login ({ navigation }){
 
   const [email,setEmail]= useState('')
   const [senha,setSenha]= useState('')
   const [mostrar,setMostrar]= useState(true)
+
+
+  function login(){
+    firebase.auth().signInWithEmailAndPassword(email, senha)
+        .then((userCredential) => {
+            navigation.navigate('Home');
+    // Signed in
+    var user = userCredential.user;
+    // ...
+  })
+  .catch((error) => {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    alert('email ou senha incorretos!!',errorCode, errorMessage);
+  });
+  }
+
+  useEffect(()=>{
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            console.log(user.uid)
+        } else {
+          console.log('não logado')
+        }
+      });
+  },[])
       return(
         <View style={styles.conteudo}>
                 
@@ -24,7 +52,7 @@ export default function Login ({ navigation }){
                         autoFocus={false}
                         autoCorrect={false}
                         placeholder="Seu email cadastrado"
-                        onChangeText={(texto)=>setEmail()}
+                        onChangeText={email => setEmail(email)} 
                         value={email}
                         keyboardType="email-address"
                     ></TextInput> 
@@ -37,7 +65,7 @@ export default function Login ({ navigation }){
                         autoCorrect={false}
                         placeholder="Sua senha"
                         secureTextEntry={mostrar}
-                        onChangeText={(texto)=>setSenha(texto)}
+                        onChangeText={senha => setSenha(senha)} 
                         value={senha}
                     ></TextInput> 
                     <TouchableOpacity 
@@ -58,7 +86,7 @@ export default function Login ({ navigation }){
                 <View style={styles.bloco}>
                     <TouchableOpacity 
                         style={styles.botao}
-                        onPress={() => navigation.navigate('Home')}
+                        onPress={() => {login()}}
                     >
                         <Text style={{color:'#fff'}}>Entrar</Text>
                     </TouchableOpacity>
@@ -69,6 +97,15 @@ export default function Login ({ navigation }){
                         onPress={() => navigation.navigate('Cadastro')}
                     >
                         <Text style={styles.cadastro}>Cadastrar</Text>
+                    </TouchableOpacity>
+
+                </View>
+
+                <View>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('Home')}
+                    >
+                        <Text style={styles.cadastro}>Home</Text>
                     </TouchableOpacity>
 
                 </View>
@@ -142,8 +179,10 @@ const styles = StyleSheet.create({
     },
     icone:{
         width:"15%",
-        height:45,
+        //height:45,
         marginTop:-30,
-        marginLeft:200
+        marginLeft:200,
+        paddingRight:5
+
     },
 })

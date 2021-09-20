@@ -13,7 +13,10 @@ import Perfil from './componentes/perfil'
 import Cadastro from './componentes/cadastro'
 import Finalizar from './componentes/finalizar'
 import Home from './componentes/home'
-import Cronometro from './componentes/cronometro'
+import Addatividade from './componentes/addatividade'
+import Listatividade from './componentes/listatividade'
+import Editatividade from './componentes/editatividade'
+
 
 const Tab=createBottomTabNavigator();
 const Stack =createStackNavigator();
@@ -96,6 +99,24 @@ export default function App() {
                   name="Finalizar"
                   component={Finalizar}
                   options={{title:'Finalizar'}}
+                />
+
+                <Stack.Screen
+                  name="Addatividade"
+                  component={Addatividade}
+                  options={{title:'Addatividade'}}
+                />
+
+                <Stack.Screen
+                  name="Listatividade"
+                  component={Listatividade}
+                  options={{title:'Listatividade'}}
+                />
+
+                <Stack.Screen
+                  name="Editatividade"
+                  component={Editatividade}
+                  options={{title:'Editatividade'}}
                 />
     </Stack.Navigator>
     </NavigationContainer>

@@ -1,6 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Touchableighlight, Image, Button} from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Image} from 'react-native';
 import { Entypo,MaterialCommunityIcons,FontAwesome5,Ionicons } from '@expo/vector-icons';
+import firebase from './firebaseConfig';
+
+function logout(){
+    firebase.auth().signOut().then(() => {
+        alert('Você saiu')
+      }).catch((error) => {
+        alert('falha')
+    });
+}
+
 export default props=>{
     return(    
         <SafeAreaView>
@@ -58,7 +68,11 @@ export default props=>{
             </View>
 
             <View>
-                
+                <TouchableOpacity style={{padding:50}}
+                    onPress={() => {logout()}}
+                >
+                    <Text>SAIR</Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
 
