@@ -30,12 +30,8 @@ export default function Login ({ navigation }){
         if (user) {
             navigation.navigate('Restrito')
         } else {
-<<<<<<< HEAD
           console.log('Usuário não autenticado!!!');
           console.log('Usuário não autenticado,please for is email and password!!!');
-=======
-          console.log('XXXXXXX');
->>>>>>> c36d12cc2024367673d2a1f818dd8af182ee6b68
         }
       });
   },[])
