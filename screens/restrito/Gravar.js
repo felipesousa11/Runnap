@@ -17,6 +17,8 @@ export default function ({navigation}){
     const [distancia, setDistancia] = useState(0);
     const [tempo, setTempo] = useState (0);
     const [speed, setSpeed] = useState (0);
+
+    const [inicio, setInicio] = useState(null);
     
 
     const [historicoLocalizacao, setHistoricoLocalizacao] = useState([]);
@@ -32,6 +34,7 @@ export default function ({navigation}){
       const [rota, setRota] = useState([]);
 
     startTraking = async () => {
+        setInicio(new Date());
         const { status } = await Location.requestBackgroundPermissionsAsync();
         if (status === 'granted') {
           console.log("Iniciando serviço")
@@ -42,14 +45,31 @@ export default function ({navigation}){
       };
 
     stopTraking = async () => {
+        salvarAtividade();
         const { status } = await Location.requestBackgroundPermissionsAsync();
         if (status === 'granted') { 
             await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
         }
     };
+
+    const salvarAtividade = ()=> {
+        const atividade = {
+            nome: "Atividade ao por do sol",
+            distancia: distancia,
+            inicio: inicio,
+            fim: new Date(),
+            velocidade: speed,
+            percurso: rota,
+        }
+
+        dbfs.collecton('usuarios')
+            .doc('usuarioAtial')
+            .collecton('atividades')
+            .add(atividade);
+    }
     
       callbackUpdate = (track) => {
-       console.log("SIZE: ", track)
+       //console.log("SIZE: ", track)
         if(track){
             let current = track[track.length-1][0].coords;
             current = {
@@ -63,6 +83,10 @@ export default function ({navigation}){
             if(current.latitude && rota &&  rota.length>0)
                 setDistancia(distancia+ haversine(current, rota[rota.length-1],{unit: 'km'}))
             setRota([...rota,{latitude:current.latitude, longitude:current.longitude}])
+
+            const duracao = (new Date().getTime() - inicio.getTime())/1000
+            setTempo(duracao)
+            setSpeed(duracao/distancia)
         }
       }
 
@@ -100,7 +124,7 @@ export default function ({navigation}){
            
                 <View style={{flexDirection:'row', alignItems:'space-between'}}>
                     <View style={styles.bloco}>
-                        <Text style={styles.txtTitulo}>00.00</Text>
+                        <Text style={styles.txtTitulo}>{tempo}</Text>
                         <View style={styles.linha}>
                             <AntDesign name="clockcircleo" size={17} color="black" />
                             <Text>Duração</Text>
@@ -108,7 +132,7 @@ export default function ({navigation}){
                     </View>
 
                     <View style={styles.bloco}>
-                        <Text style={styles.txtTitulo}>{speed}</Text>
+                        <Text style={styles.txtTitulo}>{speed.toFixed(2)}</Text>
                         <View style={styles.linha}>
                             <Entypo name="gauge" size={20} color="black" />
                             <Text>Ritmo (min/km)</Text>
