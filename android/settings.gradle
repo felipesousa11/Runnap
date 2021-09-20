@@ -1,4 +1,4 @@
-rootProject.name = 'runapp'
+rootProject.name = 'Runnap'
 
 apply from: '../node_modules/react-native-unimodules/gradle.groovy'
 includeUnimodulesProjects()

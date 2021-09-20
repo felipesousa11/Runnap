@@ -1,18 +1,11 @@
 {
-  "name": "runapp",
-  "displayName": "runapp",
-  "icon": "./img/icone.png",
-  "splash":{
-    "image":"./img/splash.png",
-    "resizeMode": "cover",
-    "backgroundColor":"#ffffff"
-  },
   "expo": {
-    "name": "runapp",
-    "slug": "runapp",
+    "name": "Runnap",
+    "slug": "Runnap",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
     ]
-  }
+  },
+  "name": "Runnap"
 }
