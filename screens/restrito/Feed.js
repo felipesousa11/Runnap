@@ -41,6 +41,7 @@ export default function Feed ({ navigation }){
         setAtividadeSelecionada (item)
     }
 
+
    
     return(    
         <View style={[styles.containerfeed, styles.containertop]}>
@@ -70,7 +71,7 @@ export default function Feed ({ navigation }){
                                     
                                             <View style={{paddingRight:20}}>
                                                 <Text style={{fontSize:12, paddingRight:25}}>Tempo</Text>
-                                                <Text style={styles.txtInfor}>{item.hora}:{item.minuto}:{item.segundo}</Text>
+                                                <Text style={styles.txtInfor}>{item.min}:{item.minuto}:{item.segundo}</Text>
                                             </View>
 
                                             <View style={{paddingRight:20}}>
