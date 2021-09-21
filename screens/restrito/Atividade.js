@@ -1,12 +1,13 @@
 import React ,{useState,useEffect} from 'react';
-import { Text, TextInput, View, TouchableOpacity,KeyboardAvoidingView  } from 'react-native';
+import { Text, TextInput,View, TouchableOpacity,KeyboardAvoidingView,Button,Platform  } from 'react-native';
 import { Entypo, FontAwesome,Fontisto,Feather,Ionicons } from '@expo/vector-icons';
 import {styles} from '../../assets/style/Style';
 import Menutopo from '../../assets/components/Menutopo';
 import firebase from '../../firebaseConfig';
 import * as ImagePicker from 'expo-image-picker';
-
-
+import { TabActions } from '@react-navigation/routers';
+import DatePicker from 'react-native-datepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function Atividade ({ navigation }){
 
@@ -24,13 +25,11 @@ export default function Atividade ({ navigation }){
     const [dia, setDia] = useState('');
     const [mes, setMes] = useState('');
     const [ano, setAno] = useState('');
-   
-
-    
-
-
+    const [data,setData] = useState('');
+    const [date, setDate] = useState(new Date());
+    const [mode, setMode] = useState('date');
+    const [show, setShow] = useState(false);
     const user_id = firebase.auth().currentUser.uid
-
 
     const onChangeNome = (txtNome) =>{
         setNome(txtNome)
@@ -91,6 +90,27 @@ export default function Atividade ({ navigation }){
         }
     }
 
+    const changeDate = (valor)=>{
+       setData(valor)
+    }
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+    
+        setDate(currentDate);
+        setShow(Platform.OS === 'ios' ? true : false);
+    };
+    
+      const showMode = currentMode => {
+        setShow(true);
+        setMode(currentMode);
+      };
+
+    
+      const showTimepicker = () => {
+        showMode('time');
+      };
+    
+
     return(    
        
         <View style={[styles.container, styles.containertop]}>
@@ -100,7 +120,7 @@ export default function Atividade ({ navigation }){
             </TouchableOpacity>
                 <Text style={styles.title}>Atividade</Text>
         </View>
-       
+        
             <KeyboardAvoidingView> 
 <View style={styles.container}>
 <Text>Adicionar atividade manualmente</Text>
@@ -123,64 +143,30 @@ export default function Atividade ({ navigation }){
         keyboardType='numeric'
     />
 
-    <View style={{flexDirection:'row'}}>
-        <TextInput
-            style={styles.inputnum}
-            placeholder="Hora"
-            placeholderTextColor="black"
-            onChangeText={txtHora => onChangeHora(txtHora)} 
-            value={hora}
-            keyboardType='numeric'
-        />
-
-        <TextInput
-            style={styles.inputnum}
-            placeholder="Minutos"
-            placeholderTextColor="black"
-            onChangeText={txtMinuto => onChangeMinuto(txtMinuto)} 
-            value={minuto}
-            keyboardType='numeric'
-            maxLength={59}
-        />
-
-        <TextInput
-            style={styles.inputnum}
-            placeholder="Segundos"
-            placeholderTextColor="black"
-            onChangeText={txtSegundo => onChangeSegundo(txtSegundo)} 
-            value={segundo}
-            keyboardType='numeric'
-            maxLength={59}
-        />
-    </View>
+        <View>
+            <View>
+                <Button onPress={showTimepicker} title="Selecione a hora!" />
+            </View>
+            {show && (
+                <DateTimePicker
+                testID="dateTimePicker"
+                timeZoneOffsetInMinutes={0}
+                value={date}
+                mode={mode}
+                is24Hour={true}
+                display="default"
+                onChange={onChange} 
+                />
+            )}
+        </View>
 
     <View style={{flexDirection:'row'}}>
-        <TextInput
-            style={styles.inputnum}
-            placeholder="Dia"
-            placeholderTextColor="black"
-            onChangeText={txtDia => onChangeDia(txtDia)} 
-            value={dia}
-            keyboardType='numeric'
-        />
-
-        <TextInput
-            style={styles.inputnum}
-            placeholder="Mês"
-            placeholderTextColor="black"
-            onChangeText={txtMes => onChangeMes(txtMes)} 
-            value={mes}
-            keyboardType='numeric'
-        />
-
-        <TextInput
-            style={styles.inputnum}
-            placeholder="Ano"
-            placeholderTextColor="black"
-            onChangeText={txtAno => onChangeAno(txtAno)} 
-            value={ano}
-            keyboardType='numeric'
-        />
+            <DatePicker
+                format="DD/MM/YYYY"
+                style={styles.dateComponente}
+                date={data}
+                onDateChange={changeDate}
+            />
     </View>
 
 </View>

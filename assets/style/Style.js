@@ -223,6 +223,9 @@ imagem:{
     marginBottom:-115,
 
 },
+dateComponente:{
+    width:350
+},
 //////////////////////////////// Inicio Perfil /////////////////////////////////////////////
 
 imgprofile:{

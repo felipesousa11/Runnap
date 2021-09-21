@@ -75,7 +75,6 @@ export default function Feed ({ navigation }){
 
                                             <View style={{paddingRight:20}}>
                                                 <Text >{item.dia}/{item.mes}/{item.ano}</Text>
-                                                <Text >{item.hora}:{item.minuto}</Text>
                                             </View>
                                         </View>
                                     </View>
