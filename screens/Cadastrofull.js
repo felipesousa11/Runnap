@@ -93,12 +93,12 @@ function cadastrofull () {
     let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
-        aspect: [4, 3],
+        aspect: [4, 4],
         quality: 1,
     });
 
     if (!result.cancelled) {
-      this.uploadImage(result.uri, "test-image")
+      this.uploadImage(result.uri)
       .then(() => {
           Alert.alert("Sucesso");
       })
@@ -112,7 +112,7 @@ function cadastrofull () {
       const response = await fetch (uri);
       const blob = await response.blob();
 
-      var ref = firebase.storage().ref().child("perfil/"+ imageName);
+      var ref = firebase.storage().ref().child(`user/${auth.currentUser.uid}/Perfil`);
       return ref.put(blob);
   }
 

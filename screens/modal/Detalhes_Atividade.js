@@ -71,12 +71,14 @@ export default function({navigation, item}){
                                     </View>
                                 </TouchableOpacity>
                                 
-                                    <View style={styles.boxuser}>
-                                        <TouchableOpacity onPress={() => { delFire(item.key) }}>
-                                        <MaterialCommunityIcons name="trash-can-outline" size={24} color="black" />
-                                        <Text>Excluir</Text>
-                                        </TouchableOpacity>
-                                    </View>
+                                    
+                                    <TouchableOpacity onPress={() => { delFire(item.key) }}>
+                                        <View style={styles.boxuser}>
+                                            <MaterialCommunityIcons name="trash-can-outline" size={24} color="black" />
+                                            <Text>Excluir</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                    
                                 
                                 <TouchableOpacity>
                                     <View style={styles.boxuser}>

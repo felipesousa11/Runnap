@@ -1,5 +1,5 @@
 import React ,{useState,useEffect} from 'react';
-import { Text, TextInput, View, TouchableOpacity,KeyboardAvoidingView  } from 'react-native';
+import { Text, TextInput, View, TouchableOpacity,KeyboardAvoidingView, Modal  } from 'react-native';
 import { Entypo, FontAwesome,Fontisto,Feather,Ionicons } from '@expo/vector-icons';
 import {styles} from '../../assets/style/Style';
 import Menutopo from '../../assets/components/Menutopo';
@@ -9,6 +9,7 @@ import * as ImagePicker from 'expo-image-picker';
 
 
 export default function Atividade ({ navigation }){
+
 
     if (firebase.auth().currentUser !==null){
         
