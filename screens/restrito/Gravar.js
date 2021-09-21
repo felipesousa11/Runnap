@@ -62,10 +62,11 @@ export default function ({navigation}){
             percurso: rota,
         }
 
-        dbfs.collecton('usuarios')
+       /* dbfs.collecton('usuarios')
             .doc('usuarioAtial')
             .collecton('atividades')
             .add(atividade);
+            */
     }
     
       callbackUpdate = (track) => {
@@ -260,3 +261,4 @@ let callbackUpdate = null;
       addLocation(locations)
     }
   });
+
