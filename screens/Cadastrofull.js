@@ -98,7 +98,7 @@ function cadastrofull () {
     });
 
     if (!result.cancelled) {
-      this.uploadImage(result.uri)
+      this.uploadImage(result.uri, "test-image")
       .then(() => {
           Alert.alert("Sucesso");
       })
@@ -112,7 +112,7 @@ function cadastrofull () {
       const response = await fetch (uri);
       const blob = await response.blob();
 
-      var ref = firebase.storage().ref().child(`user/${auth.currentUser.uid}/Perfil`);
+      var ref = firebase.storage().ref().child("perfil/"+ imageName);
       return ref.put(blob);
   }
 

@@ -82,7 +82,20 @@ export default function Feed ({ navigation }){
                             </View>
 
                            
-                                <Modal 
+                                
+                        </View>
+                        
+                        )}
+                        />
+                        <View style={{alignSelf:'flex-end', padding:10}}>
+                            <TouchableOpacity
+                                onPress={() =>{setAtividade(!atividade);}}
+                                style={styles.btnDark}
+                            >
+                                <AntDesign name="pluscircle" size={50} color="red" />
+                            </TouchableOpacity>
+                        </View>
+                        <Modal 
                                     animationType='slide' visible={atividade}
                                     onRequestClose={() => {setAtividade(false);}}
                                 >
@@ -104,18 +117,6 @@ export default function Feed ({ navigation }){
                                     </TouchableOpacity>
                                     <Detalhes item = {atividadeSelecionada}/>
                                 </Modal>
-                        </View>
-                        
-                        )}
-                        />
-                        <View style={{alignSelf:'flex-end', padding:10}}>
-                            <TouchableOpacity
-                                onPress={() =>{setAtividade(!atividade);}}
-                                style={styles.btnDark}
-                            >
-                                <AntDesign name="pluscircle" size={50} color="red" />
-                            </TouchableOpacity>
-                        </View>
         </View>
     );
 }
