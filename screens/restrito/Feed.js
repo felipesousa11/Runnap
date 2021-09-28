@@ -1,6 +1,6 @@
 import React ,{useState, useEffect} from 'react';
 import { Text, View, Image, TouchableOpacity,FlatList, Modal } from 'react-native';
-import { FontAwesome5, AntDesign ,Feather,MaterialCommunityIcons,Ionicons   } from '@expo/vector-icons';
+import { FontAwesome5, AntDesign ,Feather,MaterialCommunityIcons,Ionicons} from '@expo/vector-icons';
 import {styles} from '../../assets/style/Style';
 import Menutopo from '../../assets/components/Menutopo';
 import firebase from '../../firebaseConfig';
