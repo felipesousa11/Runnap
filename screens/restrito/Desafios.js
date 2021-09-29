@@ -19,7 +19,7 @@ export default function Ranking ({ navigation }){
 
     useEffect(() =>{
         let ref = firebase.firestore().collection("atividades")
-        .orderBy("distancia", "desc").onSnapshot(querySnapshot =>{
+        .orderBy("date", "desc").onSnapshot(querySnapshot =>{
         const data = []
             querySnapshot.forEach(doc =>{
                 data.push({
