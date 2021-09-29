@@ -29,7 +29,12 @@ export default function({navigation, item}){
       }  
     return(    
         <View style={[styles.containerfeed, styles.containertop]}>
-           <Menutopo title='Detalhe da atividade' navigation={navigation}/>
+           <View style={styles.topoatividade}>
+                <TouchableOpacity style={styles.buttonNews} onPress={() => navigation.navigate('Feed')}>
+                    <Ionicons name="arrow-undo-outline" size={24} color="black" />
+                </TouchableOpacity>
+                    <Text style={styles.title}>Detalhe da Atividade</Text>
+            </View>
             
            {
             atividade &&
