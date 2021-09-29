@@ -19,8 +19,8 @@ export default function Atividade ({ navigation }){
     const [nome, setNome] = useState('');
     const [distancia, setDistancia] = useState('');
     const [hora, setHora] = useState('');
-    const [minuto, setMinuto] = useState('');
-    const [segundo, setSegundo] = useState('');
+    const [minutos, setMinutos] = useState('');
+    const [segundos, setSegundos] = useState('');
     const [dia, setDia] = useState('');
     const [mes, setMes] = useState('');
     const [ano, setAno] = useState('');
@@ -44,12 +44,12 @@ export default function Atividade ({ navigation }){
         setHora(txtHora)
     }
     
-    const onChangeMinuto = (txtMinuto) =>{
-        setMinuto(txtMinuto)
+    const onChangeMinutos = (txtMinuto) =>{
+        setMinutos(txtMinuto)
     }
 
-    const onChangeSegundo = (txtSegundo) =>{
-        setSegundo(txtSegundo)
+    const onChangeSegundos = (txtSegundo) =>{
+        setSegundos(txtSegundo)
     }
 
     const onChangeDia = (txtDia) =>{
@@ -71,8 +71,8 @@ export default function Atividade ({ navigation }){
                 distancia: distancia,
                 nome: nome,
                 hora: hora,
-                minuto: minuto,
-                segundo: segundo,
+                minutos: minutos,
+                segundos: segundos,
                 dia: dia,
                 mes: mes,
                 ano: ano,
@@ -85,7 +85,8 @@ export default function Atividade ({ navigation }){
             setDistancia('');
             setNome('');
             setHora('');
-            setMinuto ('');
+            setMinutos ('');
+            setSegundos('');
             setDia ('');
             setMes ('');
             setAno ('');
@@ -138,8 +139,8 @@ export default function Atividade ({ navigation }){
                                     style={styles.inputnum}
                                     placeholder="Minutos"
                                     placeholderTextColor="black"
-                                    onChangeText={txtMinuto => onChangeMinuto(txtMinuto)} 
-                                    value={minuto}
+                                    onChangeText={txtMinuto => onChangeMinutos(txtMinuto)} 
+                                    value={minutos}
                                     keyboardType='numeric'
                                     maxLength={59}
                                 />
@@ -148,8 +149,8 @@ export default function Atividade ({ navigation }){
                                     style={styles.inputnum}
                                     placeholder="Segundos"
                                     placeholderTextColor="black"
-                                    onChangeText={txtSegundo => onChangeSegundo(txtSegundo)} 
-                                    value={segundo}
+                                    onChangeText={txtSegundo => onChangeSegundos(txtSegundo)} 
+                                    value={segundos}
                                     keyboardType='numeric'
                                     maxLength={59}
                                 />
