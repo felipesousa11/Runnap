@@ -16,23 +16,21 @@ export default function Perfil ({ navigation }){
     
     const user_id = firebase.auth().currentUser.uid
     const [data, setData] = useState('');
-    const [imagem, SetImagem]= useState ('');
+    const [imagem, setImagem]= useState (null);
 
     async function  getimagemPerfil (){
-        console.log ("user/"+user_id+'/perfil')
-    var ref = firebase.storage().ref().child("user/"+user_id+'/perfil');
+        let ref = firebase.storage().ref().child("user/"+user_id+'/perfil');
         ref.getDownloadURL().then(async (url) => {
-            const response = await fetch (url);
+            const response = await fetch (url);            
             let blob = await response.blob();
-            setImagem (URL.createObjectURL(blob))
-            console.log (blob)
-        })
-        //console.log(1,url)
-       // setImagem (url)
-        
-    }
-   
-
+            const fileReaderInstance = new FileReader();
+            fileReaderInstance.readAsDataURL(blob);
+            fileReaderInstance.onload = () => {
+                let base64 = fileReaderInstance.result;
+                setImagem(base64);       
+            }            
+        });
+    }   
    
 
         useEffect(() =>{
@@ -96,14 +94,14 @@ export default function Perfil ({ navigation }){
                     <Image 
                         source={{uri:imagem}}
                         style={styles.imgprofile}
-                    />
+                    /> 
                     <Text style={styles.txtTitulo}>{item.nome}</Text>
                 </View>
 
                 <View style={styles.infouser}>
                     <View>
                         <Text style={styles.txtInfor}>{item.altura}</Text>
-                        <Text style={styles.txtsubtitle}>{imagem}</Text>
+                        <Text style={styles.txtsubtitle}>Altura</Text>
                     </View>
 
                     <View>

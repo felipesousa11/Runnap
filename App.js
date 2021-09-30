@@ -3,7 +3,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Login, Cadastro, Cadastrofull } from './screens';
 import Restrito from './screens/restrito/Restrito';
-
+console.ignoredYellowBox = [
+  'Setting a timer'
+]
 
 const Stack = createStackNavigator();
 
