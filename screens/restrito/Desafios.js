@@ -1,12 +1,11 @@
 import React ,{useState, useEffect} from 'react';
 import { Text, View, Image, TouchableOpacity,FlatList, Modal } from 'react-native';
-import { FontAwesome5, AntDesign ,Feather,MaterialCommunityIcons,Ionicons   } from '@expo/vector-icons';
 import {styles} from '../../assets/style/Style';
 import Menutopo from '../../assets/components/Menutopo';
 import firebase from '../../firebaseConfig';
+import AtividadesService from '../../service/AtividadesService';
 
 export default function Ranking ({ navigation }){
-
 
     if (firebase.auth().currentUser !==null){
         
@@ -17,24 +16,15 @@ export default function Ranking ({ navigation }){
     const user_id = firebase.auth().currentUser.uid
     const [data, setData] = useState('');
 
+    async function loadAtividades(){
+        const atividades = await AtividadesService.loadAtividades();
+        setData(atividades);
+    }
+
     useEffect(() =>{
-        let ref = firebase.firestore().collection("atividades")
-        .orderBy("distancia", "desc").onSnapshot(querySnapshot =>{
-        const data = []
-            querySnapshot.forEach(doc =>{
-                data.push({
-                    ...doc.data(),
-                       key:doc.id
-            })
-        })
-        setData(data)
-    })
-        return () => ref()
-    }, [])
+       loadAtividades()
+    }, []);
 
-  
-
-   
     return(    
         <View style={[styles.containerfeed, styles.containertop]}>
            <Menutopo title='Ranking' navigation={navigation}/>
@@ -51,13 +41,21 @@ export default function Ranking ({ navigation }){
                 <View style={{flexDirection:'row', alignItems:'center'}}>
                     <View style={styles.box}>
                         <View style={{paddingTop:10,paddingBottom:10}}>
+                            
+                            { !item.profile.imagem ? 
                             <Image
                                 source={require('../../assets/perfil.png')}
                                 style={styles.imgprofile}
+                            /> : 
+                            <Image
+                                source={{uri: item.profile.imagem}}
+                                style={styles.imgprofile}
                             />
+                            }
                         </View>
                         </View>
                         <View style={{paddingRight:20, flexDirection:'row'}}>
+                            <Text style={styles.txtTitulo}>{item.profile.nome}</Text>
                             <Text style={styles.txtTitulo}>{item.nome}</Text>
                             <Text style={styles.txtInfor}>{item.distancia} km</Text>
                             <Text style={styles.txtInfor}>{item.hora}:{item.minutos}:{item.segundos}</Text>

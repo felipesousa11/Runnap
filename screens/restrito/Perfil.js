@@ -4,7 +4,7 @@ import { Entypo, FontAwesome,Fontisto,Feather,AntDesign,Ionicons } from '@expo/v
 import {styles} from '../../assets/style/Style';
 import Menutopo from '../../assets/components/Menutopo';
 import firebase from '../../firebaseConfig';
-
+import UserService from '../../service/UserService';
 
 export default function Perfil ({ navigation }){
 
@@ -18,44 +18,21 @@ export default function Perfil ({ navigation }){
     const [data, setData] = useState('');
     const [imagem, setImagem]= useState (null);
 
-    async function  getimagemPerfil (){
-        let ref = firebase.storage().ref().child("user/"+user_id+'/perfil');
-        ref.getDownloadURL().then(async (url) => {
-            const response = await fetch (url);            
-            let blob = await response.blob();
-            const fileReaderInstance = new FileReader();
-            fileReaderInstance.readAsDataURL(blob);
-            fileReaderInstance.onload = () => {
-                let base64 = fileReaderInstance.result;
-                setImagem(base64);       
-            }            
-        });
-    }   
-   
+    
+    async function loadUserProfile(){
+        const user = await UserService.getUserProfile(user_id, true);
+        setData([user]);    
+        setImagem(user.imagem);
+    }
 
-        useEffect(() =>{
-            let ref = firebase.firestore().collection('user').where("user_id", "==", user_id).onSnapshot(querySnapshot =>{
-            const data = []
-                querySnapshot.forEach(doc =>{
-                    data.push({
-                        ...doc.data(),
-                           key:doc.id
-                })
-            })
-            setData(data)
-            getimagemPerfil()
-            
-
-        })
-            return () => ref()
-        }, [])
+    useEffect(() =>{
+        loadUserProfile();        
+    }, [])
 
     function logout(){
-        firebase.auth().signOut().then(() => {
+        UserService.logout(()=>{
             navigation.navigate('Login')
-          }).catch((error) => {
-            alert('falha')
-        });
+        })
     }
 
     function update (){
