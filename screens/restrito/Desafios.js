@@ -19,7 +19,7 @@ export default function Ranking ({ navigation }){
 
     useEffect(() =>{
         let ref = firebase.firestore().collection("atividades")
-        .orderBy("date", "desc").onSnapshot(querySnapshot =>{
+        .orderBy("distancia", "desc").onSnapshot(querySnapshot =>{
         const data = []
             querySnapshot.forEach(doc =>{
                 data.push({
@@ -60,6 +60,8 @@ export default function Ranking ({ navigation }){
                         <View style={{paddingRight:20, flexDirection:'row'}}>
                             <Text style={styles.txtTitulo}>{item.nome}</Text>
                             <Text style={styles.txtInfor}>{item.distancia} km</Text>
+                            <Text style={styles.txtInfor}>{item.hora}:{item.minutos}:{item.segundos}</Text>
+
                         </View>
                     </View>
                 

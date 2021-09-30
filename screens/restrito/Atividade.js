@@ -1,5 +1,5 @@
 import React ,{useState,useEffect} from 'react';
-import { Text, TextInput, View, TouchableOpacity,KeyboardAvoidingView  } from 'react-native';
+import { Text, TextInput, View, TouchableOpacity,KeyboardAvoidingView, Modal  } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {styles} from '../../assets/style/Style';
 import Menutopo from '../../assets/components/Menutopo';
@@ -9,6 +9,9 @@ import * as ImagePicker from 'expo-image-picker';
 
 
 export default function Atividade ({ navigation }){
+
+    const [atividade, setAtividade] = useState(false);
+
 
     if (firebase.auth().currentUser !==null){
         
@@ -44,12 +47,12 @@ export default function Atividade ({ navigation }){
         setHora(txtHora)
     }
     
-    const onChangeMinutos = (txtMinuto) =>{
-        setMinutos(txtMinuto)
+    const onChangeMinutos = (txtMinutos) =>{
+        setMinutos(txtMinutos)
     }
 
-    const onChangeSegundos = (txtSegundo) =>{
-        setSegundos(txtSegundo)
+    const onChangeSegundos = (txtSegundos) =>{
+        setSegundos(txtSegundos)
     }
 
     const onChangeDia = (txtDia) =>{
@@ -97,7 +100,8 @@ export default function Atividade ({ navigation }){
        
         <View style={[styles.container, styles.containertop]}>
              <View style={styles.topoatividade}>
-                <TouchableOpacity style={styles.buttonNews} onPress={() => navigation.navigate('Feed')}>
+                <TouchableOpacity style={styles.buttonNews} 
+                onPress={() =>{setAtividade(atividade);}}>
                     <Ionicons name="arrow-undo-outline" size={24} color="black" />
                 </TouchableOpacity>
                     <Text style={styles.title}>Atividade</Text>
@@ -139,7 +143,7 @@ export default function Atividade ({ navigation }){
                                     style={styles.inputnum}
                                     placeholder="Minutos"
                                     placeholderTextColor="black"
-                                    onChangeText={txtMinuto => onChangeMinutos(txtMinuto)} 
+                                    onChangeText={txtMinutos => onChangeMinutos(txtMinutos)} 
                                     value={minutos}
                                     keyboardType='numeric'
                                     maxLength={59}
@@ -149,7 +153,7 @@ export default function Atividade ({ navigation }){
                                     style={styles.inputnum}
                                     placeholder="Segundos"
                                     placeholderTextColor="black"
-                                    onChangeText={txtSegundo => onChangeSegundos(txtSegundo)} 
+                                    onChangeText={txtSegundos => onChangeSegundos(txtSegundos)} 
                                     value={segundos}
                                     keyboardType='numeric'
                                     maxLength={59}
@@ -196,7 +200,17 @@ export default function Atividade ({ navigation }){
                             </TouchableOpacity>
                         </View>
 
-
+                        <Modal 
+                                    animationType='slide' visible={atividade}
+                                    onRequestClose={() => {setAtividade(false);}}
+                                    onPress={() => {setAtividade(false);}}
+                                >
+                                <TouchableOpacity style={styles.buttonMenu} 
+                                onPress={() => {setAtividade(atividade);}}
+                                >
+                                    </TouchableOpacity>
+                                    <Atividade/>
+                                </Modal>
                     </View>
                 </KeyboardAvoidingView> 
         </View>

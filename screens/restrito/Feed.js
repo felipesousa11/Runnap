@@ -71,7 +71,7 @@ export default function Feed ({ navigation }){
                                     
                                             <View style={{paddingRight:20}}>
                                                 <Text style={{fontSize:12, paddingRight:25}}>Tempo</Text>
-                                                <Text style={styles.txtInfor}>{item.min}:{item.minuto}:{item.segundo}</Text>
+                                                <Text style={styles.txtInfor}>{item.hora}:{item.minutos}:{item.segundos}</Text>
                                             </View>
 
                                             <View style={{paddingRight:20}}>
@@ -99,6 +99,7 @@ export default function Feed ({ navigation }){
                         <Modal 
                                     animationType='slide' visible={atividade}
                                     onRequestClose={() => {setAtividade(false);}}
+                                    onPress={() => {setAtividade(false);}}
                                 >
                                 <TouchableOpacity style={styles.buttonMenu} 
                                 onPress={() => {setAtividade(!atividade);}}

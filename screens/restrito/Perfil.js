@@ -4,7 +4,6 @@ import { Entypo, FontAwesome,Fontisto,Feather,AntDesign,Ionicons } from '@expo/v
 import {styles} from '../../assets/style/Style';
 import Menutopo from '../../assets/components/Menutopo';
 import firebase from '../../firebaseConfig';
-import Myfeed from '../../assets/components/myfeeds'
 
 
 export default function Perfil ({ navigation }){
@@ -17,6 +16,22 @@ export default function Perfil ({ navigation }){
     
     const user_id = firebase.auth().currentUser.uid
     const [data, setData] = useState('');
+    const [imagem, SetImagem]= useState ('');
+
+    async function  getimagemPerfil (){
+        console.log ("user/"+user_id+'/perfil')
+    var ref = firebase.storage().ref().child("user/"+user_id+'/perfil');
+        ref.getDownloadURL().then(async (url) => {
+            const response = await fetch (url);
+            let blob = await response.blob();
+            setImagem (URL.createObjectURL(blob))
+            console.log (blob)
+        })
+        //console.log(1,url)
+       // setImagem (url)
+        
+    }
+   
 
    
 
@@ -30,6 +45,8 @@ export default function Perfil ({ navigation }){
                 })
             })
             setData(data)
+            getimagemPerfil()
+            
 
         })
             return () => ref()
@@ -76,8 +93,8 @@ export default function Perfil ({ navigation }){
             <View>
 
                 <View style={{paddingTop:10,paddingBottom:10}}>
-                    <Image
-                        source={require('../../assets/perfil.png')}
+                    <Image 
+                        source={{uri:imagem}}
                         style={styles.imgprofile}
                     />
                     <Text style={styles.txtTitulo}>{item.nome}</Text>
@@ -86,7 +103,7 @@ export default function Perfil ({ navigation }){
                 <View style={styles.infouser}>
                     <View>
                         <Text style={styles.txtInfor}>{item.altura}</Text>
-                        <Text style={styles.txtsubtitle}>Altura</Text>
+                        <Text style={styles.txtsubtitle}>{imagem}</Text>
                     </View>
 
                     <View>

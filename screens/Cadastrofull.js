@@ -66,6 +66,7 @@ function cadastrofull () {
             image: image,
             user_id:user_id,
         });
+        console.log('foto')
     
         navigation.navigate('Restrito')
         
@@ -110,9 +111,11 @@ function cadastrofull () {
 
   uploadImage = async (uri, imageName) => {
       const response = await fetch (uri);
-      const blob = await response.blob();
+      let blob = await response.blob();
 
-      var ref = firebase.storage().ref().child("perfil/"+ imageName);
+      //blob = URL.createObjectURL(blob);
+
+      var ref = firebase.storage().ref().child("user/"+user_id+'/perfil');
       return ref.put(blob);
   }
 

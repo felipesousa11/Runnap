@@ -50,8 +50,8 @@ export default function({navigation, item}){
                             </View>
                                 <View style={styles.box}>
                                     <View style={{paddingRight:20}}>
-                                        <Text style={{fontSize:12, paddingRight:25 }}>Elevação</Text>
-                                        <Text style={styles.txtInfor}>15 m</Text>
+                                        <Text style={{fontSize:12, paddingRight:25 }}>Data</Text>
+                                        <Text style={styles.txtInfor} >{atividade.dia}/{atividade.mes}/{atividade.ano}</Text>
                                     </View>
 
                                     <View style={{paddingRight:20}}>
@@ -61,7 +61,7 @@ export default function({navigation, item}){
                                     
                                     <View style={{paddingRight:20}}>
                                         <Text style={{fontSize:12, paddingRight:25}}>Tempo</Text>
-                                        <Text style={styles.txtInfor}>{atividade.hora}:{atividade.minuto}:{atividade.segundo}</Text>
+                                        <Text style={styles.txtInfor}>{atividade.hora}:{atividade.minutos}:{atividade.segundos}</Text>
                                     </View>
                                 </View>
                                 <Image
