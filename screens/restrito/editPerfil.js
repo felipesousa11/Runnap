@@ -22,6 +22,7 @@ export default function editPerfil({navigation, route}){
         firebase.firestore().collection("user").doc(id).update({
             nome: nomeedit
         })
+        navigation.navigate("Perfil")
     }
 
     return(
@@ -42,7 +43,7 @@ export default function editPerfil({navigation, route}){
             <View style={{paddingTop:20}}>
                 <TouchableOpacity
                     style={styles.btnedit}
-                    onPress={()=>editarPerfil(nomeedit,user_id)}
+                    onPress={()=>editarPerfil(nomeedit,idedit)}
                 >
                     <Text>Salvar</Text>
                 </TouchableOpacity>
