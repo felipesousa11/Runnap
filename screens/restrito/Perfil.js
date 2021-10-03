@@ -37,11 +37,10 @@ export default function Perfil ({ navigation }){
 
     function update (){
         firebase.firestore().collection('user').doc(user_id).update({
-            nome,
-            altura,
-            peso,
-            idade,
-            user_id: user_id
+            nome: nome,
+            altura:altura,
+            peso:peso,
+            idade:idade,
             });
     }
 
@@ -96,7 +95,7 @@ export default function Perfil ({ navigation }){
                     />
                     <View>
                 <TouchableOpacity 
-                    onPress={() => {update()}}
+                    onPress={() => {update(nome)}}
                 >
                     <Feather name="edit" size={24} color="black" />
                 </TouchableOpacity>

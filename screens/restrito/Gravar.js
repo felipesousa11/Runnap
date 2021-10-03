@@ -83,13 +83,15 @@ export default function ({navigation}){
 
             if(current.latitude && rota &&  rota.length>0)
                 setDistancia(distancia+ haversine(current, rota[rota.length-1],{unit: 'km'}))
-            setRota([...rota,{latitude:current.latitude, longitude:current.longitude}])
+                setRota([...rota,{latitude:current.latitude, longitude:current.longitude}])
 
-            const duracao = (new Date().getTime() - inicio.getTime())/1000
-            setTempo(duracao)
-            setSpeed(duracao/distancia)
-        }
-      }
+                if (inicio){
+                    const duracao = (new Date().getTime() - inicio.getTime())/1000
+                    setTempo(duracao/360)
+                    setSpeed((duracao/distancia)/360)
+                }
+            }
+      } 
 
     useEffect(() => {
             
@@ -125,7 +127,7 @@ export default function ({navigation}){
            
                 <View style={{flexDirection:'row', alignItems:'space-between'}}>
                     <View style={styles.bloco}>
-                        <Text style={styles.txtTitulo}>{tempo}</Text>
+                        <Text style={styles.txtTitulo}>{tempo.toFixed(2)}</Text>
                         <View style={styles.linha}>
                             <AntDesign name="clockcircleo" size={17} color="black" />
                             <Text>Duração</Text>
@@ -157,7 +159,11 @@ export default function ({navigation}){
                     longitudeDelta: 0.0421,                                   
 
                     }}>
-                  <Polyline
+                        <Polyline
+                    lineDashPattern={[0]}
+                    origin={location}
+                    destination={rota}
+                    apikey={LOCATION_TASK_NAME}
                     coordinates={rota}
                     strokeColor="#ff3030" // fallback for when `strokeColors` is not supported by the map-provider
                     strokeColors={[
@@ -167,9 +173,11 @@ export default function ({navigation}){
                         '#E5845C',
                         '#238C23',
                         '#7F0000'
-                    ]}
+         
+]}
                     strokeWidth={7}
                     />
+                  
                 </MapView>
             </View>
 
@@ -231,6 +239,7 @@ const styles = StyleSheet.create({
     },
 
     containerBotoes: {
+        backgroundColor:"gray",
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',

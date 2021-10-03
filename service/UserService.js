@@ -46,5 +46,11 @@ export default {
           }).catch((error) => {
             alert('falha')
         });
-    }   
+    } ,
+    
+    async atualizarNome(nome){
+        await auth.currentUser.updateProfile({
+            displayName: nome
+        });
+    },
 }
