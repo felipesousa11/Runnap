@@ -30,6 +30,19 @@ const styles = StyleSheet.create({
         padding:10,
         borderRadius:10,
     },
+    txtedit:{
+        width:250,
+        borderWidth:1,
+        borderColor:'#000',
+        padding:10,
+        borderRadius:10,
+        alignItems:'flex-end',
+        marginLeft:-90,
+    },
+    btnedit:{
+        borderColor:'#000'
+        
+    },
 
     img:{
         width:'100%',
@@ -94,6 +107,13 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
         fontSize:20,
         textAlign:'center',
+    },
+    titledit:{
+        width:'80%',
+        fontWeight:'bold',
+        fontSize:20,
+        textAlign:'center',
+        marginLeft:30
     },
 
     buttonMenu:{
@@ -177,10 +197,7 @@ infouser:{
     flexDirection:'row',
     paddingTop:5,
     paddingBottom:5,
-    paddingLeft:15,
-    paddingRight:15,
-    justifyContent:'space-between',
-    //alignContent:'center'
+    paddingTop: 10
 },
 
 
@@ -230,9 +247,9 @@ dateComponente:{
 //////////////////////////////// Inicio Perfil /////////////////////////////////////////////
 
 imgprofile:{
-    width:60,
-    height:60,
-    borderRadius:30,
+    width:80,
+    height:80,
+    borderRadius:50,
     margin:5
 },
 
