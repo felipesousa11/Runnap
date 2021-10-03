@@ -46,5 +46,5 @@ export default {
           }).catch((error) => {
             alert('falha')
         });
-    }   
+    }
 }

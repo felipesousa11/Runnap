@@ -1,8 +1,7 @@
 import React ,{useState,useEffect} from 'react';
 import { Text, View, Image, TouchableOpacity, FlatList} from 'react-native';
-import { Entypo, FontAwesome,Fontisto,Feather,AntDesign,Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons,Feather,AntDesign,Ionicons, Entypo } from '@expo/vector-icons';
 import {styles} from '../../assets/style/Style';
-import Menutopo from '../../assets/components/Menutopo';
 import firebase from '../../firebaseConfig';
 import UserService from '../../service/UserService';
 
@@ -24,6 +23,7 @@ export default function Perfil ({ navigation }){
         setData([user]);    
         setImagem(user.imagem);
     }
+    
 
     useEffect(() =>{
         loadUserProfile();        
@@ -44,6 +44,8 @@ export default function Perfil ({ navigation }){
             user_id: user_id
             });
     }
+    
+    
 
    
 
@@ -66,41 +68,46 @@ export default function Perfil ({ navigation }){
                     renderItem={({item})=>(
 
             <View>
+                <View style={{alignItems:'flex-end',paddingTop:10,marginLeft:330}}>
+                    <TouchableOpacity 
+                        onPress={() => navigation.navigate('editPerfil',{
+                            id: item.user_id,
+                            nome: item.nome
+                        })}
+                    >
+                        <Feather name="edit" size={24} color="black" />
+                    </TouchableOpacity>
+                </View>
 
-                <View style={{paddingTop:10,paddingBottom:10}}>
+                <View style={{paddingTop:10,paddingBottom:10,alignItems:'center'}}>
                     <Image 
                         source={{uri:imagem}}
                         style={styles.imgprofile}
                     /> 
+                </View>
+                <View style={{alignItems:'center',paddingTop:10}}>
                     <Text style={styles.txtTitulo}>{item.nome}</Text>
                 </View>
 
-                <View style={styles.infouser}>
-                    <View>
-                        <Text style={styles.txtInfor}>{item.altura}</Text>
-                        <Text style={styles.txtsubtitle}>Altura</Text>
+                <View>
+                    <View style={styles.infouser}>
+                        <MaterialCommunityIcons name="human-male-height-variant" size={24} color="black" />
+                        <Text style={styles.txtInfor}>{item.altura} Altura</Text>
                     </View>
 
-                    <View>
-                        <Text style={styles.txtInfor}>{item.peso}</Text>
-                        <Text style={styles.txtsubtitle}>peso</Text>
+                    <View style={styles.infouser}>
+                        <MaterialCommunityIcons name="weight-kilogram" size={24} color="black" />
+                        <Text style={styles.txtInfor}>{item.peso} Kg</Text>
                     </View> 
 
-                    <View>
-                        <Text style={styles.txtInfor}>{item.idade}</Text>
-                        <Text style={styles.txtsubtitle}>Idade</Text>
+                    <View style={styles.infouser}>
+                        <Entypo name="emoji-happy" size={24} color="black" />
+                        <Text style={styles.txtInfor}>{item.idade} Anos</Text>
                     </View> 
                 </View>
             </View>
                     )}
                     />
-                    <View>
-                <TouchableOpacity 
-                    onPress={() => {update()}}
-                >
-                    <Feather name="edit" size={24} color="black" />
-                </TouchableOpacity>
-            </View>
      </View>
     );
 }
