@@ -40,20 +40,8 @@ export default {
             });
         })
     },
-    logout(calback) {
-        firebase.auth().signOut().then(() => {
-            if(callback) calback();
-          }).catch((error) => {
-            alert('falha')
-        });
-    } ,
+    
     
 
-    async atualizarNome({id_user, nome}){
-        return await getUserCollection()
-            .doc(id_user)
-            .update({
-                nome: nome
-            });
-    }
+  
 }

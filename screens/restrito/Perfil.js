@@ -30,9 +30,11 @@ export default function Perfil ({ navigation }){
     }, [])
 
     function logout(){
-        UserService.logout(()=>{
+        firebase.auth().signOut().then(() => {
             navigation.navigate('Login')
-        })
+          }).catch((error) => {
+            alert('falha')
+        });
     }
 
     function update (){

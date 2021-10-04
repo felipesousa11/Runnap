@@ -92,15 +92,6 @@ export default function Login ({ navigation }){
                     </TouchableOpacity>
                 </View>
 
-                
-                <View>
-                    <TouchableOpacity
-                        onPress={() => navigation.navigate('Home')}
-                    >
-                        <Text style={styles.cadastro}>Home</Text>
-                    </TouchableOpacity>
-                </View>
-
             </View>
             
     );
