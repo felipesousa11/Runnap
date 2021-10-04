@@ -48,9 +48,12 @@ export default {
         });
     } ,
     
-    async atualizarNome(nome){
-        await auth.currentUser.updateProfile({
-            displayName: nome
-        });
-    },
+
+    async atualizarNome({id_user, nome}){
+        return await getUserCollection()
+            .doc(id_user)
+            .update({
+                nome: nome
+            });
+    }
 }

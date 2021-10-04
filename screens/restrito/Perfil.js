@@ -69,14 +69,7 @@ export default function Perfil ({ navigation }){
 
             <View>
                 <View style={{alignItems:'flex-end',paddingTop:10,marginLeft:330}}>
-                    <TouchableOpacity 
-                        onPress={() => navigation.navigate('editPerfil',{
-                            id: item.user_id,
-                            nome: item.nome
-                        })}
-                    >
-                        <Feather name="edit" size={24} color="black" />
-                    </TouchableOpacity>
+                    
                 </View>
 
                 <View style={{paddingTop:10,paddingBottom:10,alignItems:'center'}}>
